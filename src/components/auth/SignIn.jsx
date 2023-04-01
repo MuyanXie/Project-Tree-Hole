@@ -9,21 +9,22 @@ const SignIn = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-        console.log(userCredential)
-        if(userCredential.user.emailVerified){
-            navigate('/home')
-        }else{
-            navigate('/verifyemail')
+        try {
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          const token = await userCredential.user.getIdToken();
+          localStorage.setItem('token', token);
+          if (userCredential.user.emailVerified) {
+            navigate('/home');
+          } else {
+            navigate('/verifyemail');
+          }
+        } catch (error) {
+          console.log(error);
         }
-    }).catch((error) => {
-        console.log(error)
-    })
-    };
+      };
+      
 
     return (
         <div>
