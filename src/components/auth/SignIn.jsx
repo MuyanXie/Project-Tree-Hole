@@ -15,6 +15,7 @@ const SignIn = () => {
           const userCredential = await signInWithEmailAndPassword(auth, email, password);
           const token = await userCredential.user.getIdToken();
           localStorage.setItem('token', token);
+          const user = userCredential.user;
           if (userCredential.user.emailVerified) {
             navigate('/home');
           } else {
