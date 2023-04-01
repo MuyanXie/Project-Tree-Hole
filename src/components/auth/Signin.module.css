@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather|Rubik&display=swap');
+
+.form {
+    position: relative;
+    background-color: #ffffff;
+    padding: 1rem;
+    width: 20rem;
+    margin: 5rem auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .form-group{
+    display: block;
+  }
+
+  .head {
+    font-family: "Lucida Handwriting", cursive;
+    font-size: xx-large;
+  }
+
+.label{
+  font-family: Merriweather;
+    display: block;
+    text-align: center;
+    /* font-size: larger; */
+    padding: 5px;
+  }
+   
+  .input{
+    font-size: medium;
+    font-family: "Lucida Handwriting", cursive;
+    text-align: center;
+    margin: auto;
+    display: grid;
+    justify-content: center;
+  }
+
+  .head{
+    text-align: center;
+    font-size: x-large;
+  }
+  .btn{
+    font-family: "Lucida Handwriting", cursive;
+    color: rgb(255, 255, 255);
+    background-color: rgb(136, 0, 0);
+    border-radius: 5px;
+    font-size: medium;
+    padding: 5px;
+    border: none;
+    margin: auto;
+    display: block;
+    text-align: center;
+
+  }
+
+  .btn:hover {
+    background-color: #97c4d9;
+  }
+   
+  .messages{
+    display: block;
+    padding: 5px;
+    font-family: "Lucida Handwriting", cursive;
+    justify-content: center;
+  }
+   
+  .error{
+    display: block;
+    font-size: xx-small;
+    color: rgb(233, 181, 69);
+    width: fit-content;
+    height: 1px;
+  }
+   
+  .success{
+    display: block;
+    font-size: xx-small;
+    background-color: lightblue;
+    color: black;
+    width: fit-content;
+    height: 1px;
+  }
+
+  .or{
+    top: 0.45em;
+    flex-shrink: 1;
+    height: 1px;
+    position: relative;
+    flex-grow: 1;
+    background-color: rgba(74, 74, 74, 0.391);
+    display: block;
+  }
+
+  .textor{
+    text-transform: uppercase;
+    margin-right: 18px;
+    padding-left: 0;
+    padding-top: 0;
+    flex-direction: column;
+    margin-top: 0;
+    border-left: 0;
+    margin-bottom: 0;
+    border-bottom: 0;
+    box-sizing: border-box;
+    display: flex;
+    border-top: 0;
+    padding-right: 0;
+    flex-shrink: 0;
+    margin-left: 18px;
+    font-weight: 600;
+    color: rgba(74, 74, 74, 0.391);
+    align-items: stretch;
+    font-size: .8125rem;
+    position: relative;
+    line-height: 1.1538;
+    flex-grow: 0;
+    border-right: 0;
+    padding-bottom: 0;
+    vertical-align: baseline;
+  }
+
+  .lineor{
+    flex-direction: row;
+    display: flex;
+    margin: 4px 35px 4px 35px;
+  }
+
+  .link{
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: none;
+  }

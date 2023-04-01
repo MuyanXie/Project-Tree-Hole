@@ -1,0 +1,83 @@
+.form {
+    position: relative;
+    background-color: #ffffff;
+    padding: 1rem;
+    width: 20rem;
+    margin: 2rem auto;
+    border-radius: 6px;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .form-group{
+    display: block;
+  }
+
+  .head {
+    font-family: "Lucida Handwriting", cursive;
+    font-size: xx-large;
+    padding: 1px;
+  }
+
+.label{
+  font-family: "Lucida Handwriting", cursive;
+    display: block;
+    text-align: center;
+    font-size: larger;
+    padding: 5px;
+  }
+   
+  .input{
+    font-size: medium;
+    font-family: "Lucida Handwriting", cursive;
+    text-align: center;
+    margin: auto;
+    display: grid;
+    justify-content: center;
+  }
+
+  .head{
+    text-align: center;
+    font-size: x-large;
+  }
+  .btn{
+    font-family: "Lucida Handwriting", cursive;
+    color: rgb(255, 255, 255);
+    background-color: rgb(136, 0, 0);
+    border-radius: 5px;
+    font-size: medium;
+    padding: 5px;
+    border: none;
+    margin: auto;
+    display: block;
+    text-align: center;
+
+  }
+
+  .btn:hover {
+    background-color: #97c4d9;
+  }
+   
+  .messages{
+    display: block;
+    padding: 5px;
+    font-family: "Lucida Handwriting", cursive;
+    justify-content: center;
+  }
+   
+  .error{
+    display: block;
+    font-size: xx-small;
+    color: rgb(233, 181, 69);
+    width: fit-content;
+    height: 1px;
+  }
+   
+  .success{
+    display: block;
+    font-size: xx-small;
+    background-color: lightblue;
+    color: black;
+    width: fit-content;
+    height: 1px;
+  }
