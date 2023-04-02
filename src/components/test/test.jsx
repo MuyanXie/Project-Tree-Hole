@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
-import { db } from '../../firebase';
+import { auth, db } from '../../firebase';
 
 function Test({ user }) {
   const [data, setData] = useState(null);
@@ -8,7 +8,11 @@ function Test({ user }) {
 
   useEffect(() => {
     // Retrieve the user's data from Firestore
-    console.log(user);
+    // console.log(user);
+    //try running the reload method on the current user. 
+    //firebaseUser.reload() that should refresh the emailVerified var.
+    //需要在这里加上这个，不然user.emailVerified是false， 因为没有update一下你的user
+    console.log(auth.currentUser);
     const q = query(collection(db, 'data'), where('uid', '==', user.uid));
     const getData = async () => {
       const querySnapshot = await getDocs(q);

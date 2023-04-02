@@ -39,11 +39,16 @@ function App() {
     //     <Route path='/test' element={<Test />} />
     //   </Routes>
     // </Router>
+
+    //需要处理emmailverified 的逻辑链！
     <Router>
       <Routes>
-      <Route path="/test" element={user && user.emailVerified ? <Test user={user} /> : <Navigate to="/signin" />} />
-      <Route path="/signin" element={!user ? <SignIn /> : <Navigate to="/test" />} />
-      <Route path="/signout" element={<SignOut />} />
+        
+        <Route path="/test" element={user && user.emailVerified ? <Test user={user} /> : <Navigate to="/signin" />} />
+        <Route path="/signin" element={!user ? <SignIn /> : <Navigate to="/test" />} />
+        <Route path="/signout" element={<SignOut />} />
+        <Route path="/signup" element={!user ? <SignUp /> : <Navigate to="/test" />} />
+        <Route path="/verifyemail" element={user && !user.emailVerified ? <VerifyEmail /> : <Navigate to="/test" />} />
       </Routes>
     </Router>
   )
