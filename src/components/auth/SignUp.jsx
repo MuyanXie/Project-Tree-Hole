@@ -1,12 +1,13 @@
+//styling finished
+//TODO: finish the styling of the form
+//TODO: add the error handling sent from the server
+
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, {useState} from "react";
 import { auth } from "../../firebase";
 import { useNavigate } from 'react-router-dom';
 import logo from '../pics/University_of_Chicago-Logo.wine.png';
 import classes from './Signup.module.css';
-
-//test
-import Alert from 'react-bootstrap/Alert';
 
 const SignUp = () => {
     const [formData, setFormData] = useState({

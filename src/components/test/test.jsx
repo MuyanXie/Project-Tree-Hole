@@ -8,6 +8,7 @@ function Test({ user }) {
 
   useEffect(() => {
     auth.currentUser.getIdToken(true);
+    console.log(auth.currentUser)
     //需要在这里加上这个，不然user.emailVerified是false， 因为没有update一下你的token
     const q = query(collection(db, 'data'), where('uid', '==', user.uid));
     const getData = async () => {

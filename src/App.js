@@ -29,21 +29,8 @@ function App() {
   }
 
   return (
-    // <Router>
-    //   <Routes>
-    //     <Route path="/signin" element={<SignIn />} />
-    //     <Route path="/signup" element={<SignUp />} />
-    //     <Route path="/display" element={<Display />} />
-    //     <Route path="/addcomment" element={<AddComment />} />
-    //     <Route path="/verifyemail" element={<VerifyEmail />} />
-    //     <Route path='/test' element={<Test />} />
-    //   </Routes>
-    // </Router>
-
-    //需要处理emmailverified 的逻辑链！
     <Router>
       <Routes>
-        
         <Route path="/test" element={user && user.emailVerified ? <Test user={user} /> : <Navigate to="/signin" />} />
         <Route path="/signin" element={!user ? <SignIn /> : <Navigate to="/test" />} />
         <Route path="/signout" element={<SignOut />} />

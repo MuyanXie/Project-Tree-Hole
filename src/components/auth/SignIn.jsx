@@ -1,3 +1,7 @@
+//error message is not generated
+//fix the navigation issue
+//display error message from the server end
+
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, {useState} from "react";
 import { auth } from "../../firebase";
