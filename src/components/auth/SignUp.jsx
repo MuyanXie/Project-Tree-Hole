@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, {useState} from "react";
 import { auth } from "../../firebase";
 import { useNavigate } from 'react-router-dom';
-import logo from '../pics/University_of_Chicago-Logo.wine.png';
+import logo from '../../static/pics/University_of_Chicago-Logo.wine.png';
 import classes from './Signup.module.css';
 
 const SignUp = () => {

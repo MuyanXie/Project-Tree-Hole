@@ -6,7 +6,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import React, {useState} from "react";
 import { auth } from "../../firebase";
 import classes from './Signin.module.css';
-import logo from '../pics/University_of_Chicago-Logo.wine.png';
+import logo from '../../static/pics/University_of_Chicago-Logo.wine.png';
 import {useNavigate} from 'react-router-dom';
 
 const SignIn = () => {
