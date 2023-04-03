@@ -30,13 +30,16 @@ const SignIn = () => {
         <div>
         <form className={classes.form}>
             <br></br>
+
             <img
             src={logo}
             alt="logo"
             style={{maxWidth: '60%', maxHeight: '10%', display: 'block', margin: 'auto'}}
             ></img>
+
             <br></br>
             <br></br>
+
             <input 
             className={classes.input}
             type="email" 
@@ -44,7 +47,9 @@ const SignIn = () => {
             value={email}
             onChange = {(e) => setEmail(e.target.value)}
             ></input>
+
             <br></br>
+
             <input 
             className={classes.input}
             type="password" 
@@ -52,22 +57,26 @@ const SignIn = () => {
             value={password}
             onChange = {(e) => setPassword(e.target.value)}
             ></input>
+
             <br /> 
             <br />
+
             <button className={classes.btn} type="submit" onClick={handleSubmit}>Log In</button>
+            
             <br />
+
             <div className={classes.lineor}>
                 <div className={classes.or}></div>
                 <div className={classes.textor}>or</div>
                 <div className={classes.or}></div>
             </div>
+
             <div>
                 <p className={classes.label}>
                     Don't have an account?&ensp;
                     <a href="/signup" className={classes.link}>Sign Up</a>
                 </p>
             </div>
-
 
         </form>
         </div>

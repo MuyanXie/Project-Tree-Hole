@@ -49,6 +49,7 @@ function App() {
         <Route path="/signout" element={<SignOut />} />
         <Route path="/signup" element={!user ? <SignUp /> : <Navigate to="/test" />} />
         <Route path="/verifyemail" element={user && !user.emailVerified ? <VerifyEmail /> : <Navigate to="/test" />} />
+        <Route path="/addcomment" element={<AddComment />} />
       </Routes>
     </Router>
   )

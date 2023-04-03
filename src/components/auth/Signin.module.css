@@ -67,10 +67,15 @@
    
   .error{
     display: block;
-    font-size: xx-small;
-    color: rgb(233, 181, 69);
-    width: fit-content;
-    height: 1px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    margin: 1em 0;
+    color: red;
+    line-height: 18px;
+    text-align: center;
+    font-size: small;
   }
    
   .success{

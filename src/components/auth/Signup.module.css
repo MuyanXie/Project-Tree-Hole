@@ -1,11 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather|Rubik&display=swap');
+
 .form {
     position: relative;
     background-color: #ffffff;
     padding: 1rem;
     width: 20rem;
-    margin: 2rem auto;
+    margin: 5rem auto;
     border-radius: 6px;
-
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   }
 
@@ -16,14 +17,13 @@
   .head {
     font-family: "Lucida Handwriting", cursive;
     font-size: xx-large;
-    padding: 1px;
   }
 
 .label{
-  font-family: "Lucida Handwriting", cursive;
+  font-family: Merriweather;
     display: block;
     text-align: center;
-    font-size: larger;
+    /* font-size: larger; */
     padding: 5px;
   }
    
@@ -67,10 +67,15 @@
    
   .error{
     display: block;
-    font-size: xx-small;
-    color: rgb(233, 181, 69);
-    width: fit-content;
-    height: 1px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    margin: 1em 0;
+    color: red;
+    line-height: 18px;
+    text-align: center;
+    font-size: small;
   }
    
   .success{
@@ -80,4 +85,54 @@
     color: black;
     width: fit-content;
     height: 1px;
+  }
+
+  .or{
+    top: 0.45em;
+    flex-shrink: 1;
+    height: 1px;
+    position: relative;
+    flex-grow: 1;
+    background-color: rgba(74, 74, 74, 0.391);
+    display: block;
+  }
+
+  .textor{
+    text-transform: uppercase;
+    margin-right: 18px;
+    padding-left: 0;
+    padding-top: 0;
+    flex-direction: column;
+    margin-top: 0;
+    border-left: 0;
+    margin-bottom: 0;
+    border-bottom: 0;
+    box-sizing: border-box;
+    display: flex;
+    border-top: 0;
+    padding-right: 0;
+    flex-shrink: 0;
+    margin-left: 18px;
+    font-weight: 600;
+    color: rgba(74, 74, 74, 0.391);
+    align-items: stretch;
+    font-size: .8125rem;
+    position: relative;
+    line-height: 1.1538;
+    flex-grow: 0;
+    border-right: 0;
+    padding-bottom: 0;
+    vertical-align: baseline;
+  }
+
+  .lineor{
+    flex-direction: row;
+    display: flex;
+    margin: 4px 35px 4px 35px;
+  }
+
+  .link{
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: none;
   }
