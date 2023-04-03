@@ -9,6 +9,7 @@ import AddComment from './components/test/AddComment';
 import VerifyEmail from './components/auth/VerifyEmail';
 import SignOut from './components/auth/SignOut';
 import Test from './components/test/Test';
+import Testgetposts from './components/test/Testgetposts';
 import { auth } from './firebase';
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
         <Route path="/signup" element={!user ? <SignUp /> : <Navigate to="/test" />} />
         <Route path="/verifyemail" element={user && !user.emailVerified ? <VerifyEmail /> : <Navigate to="/test" />} />
         <Route path="/addcomment" element={<AddComment />} />
+        <Route path="/testgetposts" element={<Testgetposts />} />
       </Routes>
     </Router>
   )
