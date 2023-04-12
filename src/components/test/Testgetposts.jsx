@@ -11,7 +11,8 @@ const Testgetposts = () => {
       const q = query(collection(db, 'posts'), where('uid', '==', currentUser.uid));
       const getData = async () => {
         const querySnapshot = await getDocs(q);
-        setPosts(querySnapshot.docs.map((doc) => doc.data()));
+        setPosts(querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      //document id is stored in doc.id
       };
       getData();
     }
