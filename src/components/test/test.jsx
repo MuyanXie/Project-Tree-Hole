@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase';
 
+
 function Test({ user }) {
   const [data, setData] = useState(null);
   const [text, setText] = useState('');
