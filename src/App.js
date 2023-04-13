@@ -1,16 +1,21 @@
-import { useState, useEffect } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
-import { BrowserRouter as Router, Route, Navigate, Routes } from 'react-router-dom';
-import './App.css';
-import React from 'react';
-import SignIn from './components/auth/SignIn';
-import SignUp from './components/auth/SignUp';
-import AddComment from './components/test/AddComment';
-import VerifyEmail from './components/auth/VerifyEmail';
-import SignOut from './components/auth/SignOut';
-import Test from './components/test/Test';
-import Testgetposts from './components/test/Testgetposts';
-import { auth } from './firebase';
+import { useState, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import {
+  BrowserRouter as Router,
+  Route,
+  Navigate,
+  Routes,
+} from "react-router-dom";
+import "./App.css";
+import React from "react";
+import SignIn from "./components/auth/SignIn";
+import SignUp from "./components/auth/SignUp";
+import AddComment from "./components/test/AddComment";
+import VerifyEmail from "./components/auth/VerifyEmail";
+import SignOut from "./components/auth/SignOut";
+import Test from "./components/test/Test";
+import Testgetposts from "./components/test/Testgetposts";
+import { auth } from "./firebase";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -31,16 +36,40 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/test" element={user && user.emailVerified ? <Test user={user} /> : <Navigate to="/signin" />} />
-        <Route path="/signin" element={!user ? <SignIn /> : <Navigate to="/test" />} />
+        <Route
+          path="/test"
+          element={
+            user && user.emailVerified ? (
+              <Test user={user} />
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
+        <Route
+          path="/signin"
+          element={!user ? <SignIn /> : <Navigate to="/test" />}
+        />
         <Route path="/signout" element={<SignOut />} />
-        <Route path="/signup" element={!user ? <SignUp /> : <Navigate to="/test" />} />
-        <Route path="/verifyemail" element={user && !user.emailVerified ? <VerifyEmail /> : <Navigate to="/test" />} />
+        <Route
+          path="/signup"
+          element={!user ? <SignUp /> : <Navigate to="/test" />}
+        />
+        <Route
+          path="/verifyemail"
+          element={
+            user && !user.emailVerified ? (
+              <VerifyEmail />
+            ) : (
+              <Navigate to="/test" />
+            )
+          }
+        />
         <Route path="/addcomment" element={<AddComment />} />
         <Route path="/testgetposts" element={<Testgetposts />} />
       </Routes>
     </Router>
-  )
+  );
 }
 
 export default App;

@@ -10,13 +10,13 @@ const AddComment = () => {
       name: comment,
       date: new Date(),
     })
-    .then((docRef) => {
-      console.log("Comment added with ID: ", docRef.id);
-      setComment("");
-    })
-    .catch((error) => {
-      console.error("Error adding comment: ", error);
-    });
+      .then((docRef) => {
+        console.log("Comment added with ID: ", docRef.id);
+        setComment("");
+      })
+      .catch((error) => {
+        console.error("Error adding comment: ", error);
+      });
   };
 
   return (
@@ -29,6 +29,6 @@ const AddComment = () => {
       <button onClick={addComment}>Add Comment</button>
     </div>
   );
-}
+};
 
 export default AddComment;

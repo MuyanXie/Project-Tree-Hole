@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../../firebase";
-import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 
 const Testgetposts = () => {
   const [posts, setPosts] = useState([]);
@@ -9,10 +16,16 @@ const Testgetposts = () => {
   useEffect(() => {
     const currentUser = auth.currentUser;
     if (currentUser) {
-      const q = query(collection(db, 'posts'), where('uid', '==', currentUser.uid));
+      const q = query(
+        collection(db, "posts"),
+        where("uid", "==", currentUser.uid)
+      );
       const getData = async () => {
         const querySnapshot = await getDocs(q);
-        const data = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        const data = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         await setPosts(data);
       };
       getData();
@@ -27,13 +40,16 @@ const Testgetposts = () => {
         children: [],
         sons: post.sons,
       };
-      console.log(rootNode);
       const addComments = async (parent) => {
         if (!parent.sons) {
           return;
         }
-        const commentRefs = parent.sons.map((id) => doc(collection(db, "comments"), id));
-        const commentDocs = await Promise.all(commentRefs.map((ref) => getDoc(ref)));
+        const commentRefs = parent.sons.map((id) =>
+          doc(collection(db, "comments"), id)
+        );
+        const commentDocs = await Promise.all(
+          commentRefs.map((ref) => getDoc(ref))
+        );
         const comments = commentDocs.map((doc) => doc.data());
         if (!comments) {
           return;
@@ -49,25 +65,26 @@ const Testgetposts = () => {
           addComments(node);
         });
       };
-      addComments(rootNode).then(() => console.log(rootNode)).then(
-        () => {
-          return rootNode;
-        }
-      );
-    } 
+      addComments(rootNode).then(() => {
+        return rootNode;
+      });
+      return rootNode;
+    };
 
     async function getTrees() {
-      const trees = [];
+      const locals = [];
       for (const post of posts) {
-        buildTree(post).then((tree) => trees.push(tree));
+        buildTree(post)
+          .then((tree) => locals.push(tree))
+          .then(() => {
+            setTrees(locals);
+          });
       }
-      setTrees(trees);
     }
 
     if (posts.length > 0) {
-      getTrees().then(() => console.log(trees)).catch((err) => console.log(err));
+      getTrees();
     }
-
   }, [posts]);
 
   return (
@@ -76,23 +93,14 @@ const Testgetposts = () => {
       {posts.map((post) => (
         <div key={post.id}>
           <p>{post.text}</p>
-          <p>{post.id}</p>
-          <p>{post.uid}</p>
-          <p>{post.sons}</p>
         </div>
       ))}
-        {trees.length > 0 && (
-          <div>
-            {trees.map((tree) => (
-              <div key={tree.id}>
-                {/* <p>{tree.name}</p> */}
-                <p>{tree.text}</p>
-                <p>here</p>
-              </div>
-            ))}
-          </div>
-        )}
 
+      {trees.map((tree) => (
+        <div key={tree.id}>
+          <p>{tree.text}</p>
+        </div>
+      ))}
     </div>
   );
 };

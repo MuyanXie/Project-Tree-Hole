@@ -1,1 +1,1 @@
-// a separate new screen for adding a new post 
+// a separate new screen for adding a new post

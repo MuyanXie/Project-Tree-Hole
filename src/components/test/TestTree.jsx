@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { db } from "../../firebase";
-import { collection, doc, getDoc } from 'firebase/firestore';
+import { collection, doc, getDoc } from "firebase/firestore";
 
 export default function TestTree(id) {
   const [tree, setTree] = useState({});
@@ -17,8 +17,12 @@ export default function TestTree(id) {
     };
 
     const addComments = async (parent) => {
-      const commentRefs = parent.sons.map((id) => doc(collection(db, "comments"), id));
-      const commentDocs = await Promise.all(commentRefs.map((ref) => getDoc(ref)));
+      const commentRefs = parent.sons.map((id) =>
+        doc(collection(db, "comments"), id)
+      );
+      const commentDocs = await Promise.all(
+        commentRefs.map((ref) => getDoc(ref))
+      );
       const comments = commentDocs.map((doc) => doc.data());
       if (!comments) {
         return;
