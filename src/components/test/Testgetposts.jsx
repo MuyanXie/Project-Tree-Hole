@@ -8,6 +8,7 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
+import Testdisplaypost from "./Testdisplaypost";
 
 const Testgetposts = () => {
   const [posts, setPosts] = useState([]);
@@ -37,8 +38,11 @@ const Testgetposts = () => {
       const rootNode = {
         name: post.poster,
         text: post.text,
+        deleted: post.deleted,
+        anonymous: post.anonymous,
         children: [],
         sons: post.sons,
+        time: post.time,
       };
       const addComments = async (parent) => {
         if (!parent.sons) {
@@ -59,6 +63,7 @@ const Testgetposts = () => {
             name: comment.poster,
             text: comment.text,
             sons: comment.sons,
+            time: comment.time,
             children: [],
           };
           parent.children.push(node);
@@ -99,6 +104,7 @@ const Testgetposts = () => {
       {trees.map((tree) => (
         <div key={tree.id}>
           <p>{tree.text}</p>
+          <Testdisplaypost tree={tree} />
         </div>
       ))}
     </div>
