@@ -8,6 +8,8 @@ const Testgetposts = () => {
   useEffect(() => {
     const currentUser = auth.currentUser;
     if (currentUser) {
+      console.log(currentUser)
+      console.log(currentUser.uid)
       const q = query(collection(db, 'posts'), where('uid', '==', currentUser.uid));
       const getData = async () => {
         const querySnapshot = await getDocs(q);
