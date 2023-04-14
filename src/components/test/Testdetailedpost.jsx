@@ -7,10 +7,28 @@ const Testdetailedpost = () => {
   const { state } = useLocation();
   const [like, setLike] = useState(false);
 
+  const renderTree = (node) => {
+    // need to display the responder and respondee
+    if (!node) {
+      return null;
+    }
+
+    return (
+      <div>
+        <h2>{node.name}</h2>
+        <p>{node.text}</p>
+        {node.children && node.children.map((child) => renderTree(child))}
+      </div>
+    );
+  };
+
   const likeHandler = () => {
     setLike(!like);
     // need to add a like to the database
+    // need to send post requests
   };
+
+  // need to handle comment
 
   return (
     <div>
@@ -75,10 +93,7 @@ const Testdetailedpost = () => {
           <br></br>
           <div className={classes.or}></div>
           <br></br>
-
-
-
-
+          {state.children && state.children.map((child) => renderTree(child))}
         </div>
       )}
     </div>
