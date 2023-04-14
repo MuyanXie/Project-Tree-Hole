@@ -1,17 +1,20 @@
-import { useContext, useEffect } from 'react';
-import { DetailsContext } from './Testdisplaypost.jsx';
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const Testdetailedpost = () => {
-  const details = useContext(DetailsContext);
-
-  useEffect(() => {
-    console.log(details);
-  }, [details]);
+  const { state } = useLocation();
 
   return (
     <div>
-      <p>{details.tree.name}</p>
-      <p>{details.tree.text}</p>
+      {/* <p>{details.tree.name}</p>
+      <p>{details.tree.text}</p> */}
+      <p>here</p>
+      {state && (
+        <div>
+          <p>{state.name}</p>
+          <p>{state.text}</p>
+        </div>
+      )}
     </div>
   );
 };

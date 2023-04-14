@@ -106,7 +106,7 @@ const Testgetposts = () => {
 
       <div className={classes.posts}>
         {trees.map((tree) => (
-          <div key={tree.id}>
+          <div key={tree.time}>
             <Testdisplaypost tree={tree} />
           </div>
         ))}
