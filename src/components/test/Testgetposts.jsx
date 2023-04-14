@@ -37,13 +37,15 @@ const Testgetposts = () => {
   useEffect(() => {
     const buildTree = async (post) => {
       const rootNode = {
-        name: post.poster,
+        name: post.name,
         text: post.text,
         deleted: post.deleted,
         anonymous: post.anonymous,
         children: [],
         sons: post.sons,
         time: post.time,
+        likes: post.likes,
+        id: post.id,
       };
       const addComments = async (parent) => {
         if (!parent.sons) {
@@ -55,17 +57,22 @@ const Testgetposts = () => {
         const commentDocs = await Promise.all(
           commentRefs.map((ref) => getDoc(ref))
         );
-        const comments = commentDocs.map((doc) => doc.data());
+        const comments = commentDocs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         if (!comments) {
           return;
         }
         comments.forEach((comment) => {
           const node = {
-            name: comment.poster,
+            name: comment.name,
+            likes: comment.likes,
             text: comment.text,
             sons: comment.sons,
             time: comment.time,
             children: [],
+            id: comment.id,
           };
           parent.children.push(node);
           addComments(node);
@@ -96,13 +103,6 @@ const Testgetposts = () => {
   return (
     <div>
       <h1>My Posts</h1>
-      {/* <div>
-        {posts.map((post) => (
-          <div key={post.id}>
-            <p>{post.text}</p>
-          </div>
-        ))}
-      </div> */}
 
       <div className={classes.posts}>
         {trees.map((tree) => (
