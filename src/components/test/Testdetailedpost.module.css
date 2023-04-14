@@ -1,0 +1,47 @@
+.post {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    margin: 1rem auto;
+    padding: 3rem;
+    display: block;
+    position: relative;
+    width: 30rem;
+}
+
+.author {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.text {
+    white-space: pre-wrap;
+    font-size: 1.25rem;
+    margin: 0.25rem 0 0 0;
+    color: black;
+}
+
+.or {
+    top: 0.45em;
+    flex-shrink: 1;
+    height: 1px;
+    position: relative;
+    flex-grow: 1;
+    background-color: rgba(74, 74, 74, 0.391);
+    display: block;
+}
+
+.transparent_button {
+    background-color: transparent;
+    border: none;
+    color: black;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    cursor: pointer;
+}
