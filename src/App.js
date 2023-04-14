@@ -15,7 +15,9 @@ import VerifyEmail from "./components/auth/VerifyEmail";
 import SignOut from "./components/auth/SignOut";
 import Test from "./components/test/Test";
 import Testgetposts from "./components/test/Testgetposts";
+import Testdetailedpost from "./components/test/Testdetailedpost";
 import { auth } from "./firebase";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -67,6 +69,7 @@ function App() {
         />
         <Route path="/addcomment" element={<AddComment />} />
         <Route path="/testgetposts" element={<Testgetposts />} />
+        <Route path="/testdetailedpost" element={<Testdetailedpost />} />
       </Routes>
     </Router>
   );

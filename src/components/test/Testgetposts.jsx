@@ -9,6 +9,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import Testdisplaypost from "./Testdisplaypost";
+import classes from "./Testgetposts.module.css";
 
 const Testgetposts = () => {
   const [posts, setPosts] = useState([]);
@@ -95,18 +96,21 @@ const Testgetposts = () => {
   return (
     <div>
       <h1>My Posts</h1>
-      {posts.map((post) => (
-        <div key={post.id}>
-          <p>{post.text}</p>
-        </div>
-      ))}
+      {/* <div>
+        {posts.map((post) => (
+          <div key={post.id}>
+            <p>{post.text}</p>
+          </div>
+        ))}
+      </div> */}
 
-      {trees.map((tree) => (
-        <div key={tree.id}>
-          <p>{tree.text}</p>
-          <Testdisplaypost tree={tree} />
-        </div>
-      ))}
+      <div className={classes.posts}>
+        {trees.map((tree) => (
+          <div key={tree.id}>
+            <Testdisplaypost tree={tree} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
