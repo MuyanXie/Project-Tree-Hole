@@ -1,10 +1,10 @@
 import classes from "./Modal.module.css";
 
-function Modal(props) {
+function Modal({children, onClose}) {
   return (
     <>
-      <div className={classes.backdrop}></div>
-      <div className={classes.modal}>{props.children}</div>
+      <div className={classes.backdrop} onClick={onClose}></div>
+      <dialog open className={classes.modal}>{children}</dialog>
     </>
   );
 }

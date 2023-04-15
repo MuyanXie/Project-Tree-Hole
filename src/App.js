@@ -10,7 +10,6 @@ import "./App.css";
 import React from "react";
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
-import AddComment from "./components/test/AddComment";
 import VerifyEmail from "./components/auth/VerifyEmail";
 import SignOut from "./components/auth/SignOut";
 import Test from "./components/test/Test";
@@ -67,7 +66,6 @@ function App() {
             )
           }
         />
-        <Route path="/addcomment" element={<AddComment />} />
         <Route path="/testgetposts" element={<Testgetposts />} />
         <Route path="/testdetailedpost" element={<Testdetailedpost />} />
       </Routes>

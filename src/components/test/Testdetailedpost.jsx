@@ -5,23 +5,29 @@ import classes from "./Testdetailedpost.module.css";
 import { auth, db } from "../../firebase";
 import { doc, updateDoc } from "firebase/firestore";
 import Modal from "./Modal";
+import AddCommentToComment from "./AddCommentToComment";
 
 const Testdetailedpost = () => {
   const { state } = useLocation();
   const [like, setLike] = useState(false);
+  const [show, setShow] = useState(false);
+  const [parent, setParent] = useState("");
+
+  const hideModal = () => {
+    setShow(false);
+  };
 
   useEffect(() => {
-    // if the currentuser's uid is in the state.likes list, then set like to true
     if (state.likes.includes(auth.currentUser.uid)) {
       setLike(true);
     }
   }, [state]);
 
   const RenderTree = (node, respondee) => {
+
     const [commentLike, setCommentLike] = useState(
       node.likes.includes(auth.currentUser.uid)
     );
-    // need to display the responder and respondee
     if (!node) {
       return null;
     }
@@ -41,6 +47,11 @@ const Testdetailedpost = () => {
       });
     };
 
+    const onClickHandler = () => {
+      setParent(node.id);
+      setShow(true);
+    };
+
     return (
       <div>
         <br></br>
@@ -51,7 +62,9 @@ const Testdetailedpost = () => {
             alignItems: "center",
           }}
         >
-          <h6>{node.name} responds to {respondee}</h6>
+          <h6>
+            {node.name} responds to {respondee}
+          </h6>
           <div style={{ display: "flex", alignItems: "center" }}>
             <button
               className={classes.transparent_button}
@@ -75,7 +88,10 @@ const Testdetailedpost = () => {
                 <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
               </svg>
             </button>
-            <button className={classes.transparent_button}>
+            <button
+              className={classes.transparent_button}
+              onClick={onClickHandler}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon icon-tabler icon-tabler-message-circle"
@@ -97,7 +113,8 @@ const Testdetailedpost = () => {
         </div>
         <p>{node.text}</p>
         <div className={classes.or}></div>
-        {node.children && node.children.map((child) => RenderTree(child, node.name))}
+        {node.children &&
+          node.children.map((child) => RenderTree(child, node.name))}
       </div>
     );
   };
@@ -116,11 +133,16 @@ const Testdetailedpost = () => {
     });
   };
 
-  // need to handle comment
-
   return (
-    <Modal>
     <div>
+      {show && (
+        <Modal onClose={hideModal}>
+          <AddCommentToComment
+            parentid={parent}
+            onClose={hideModal}
+          />
+        </Modal>
+      )}
       {state && (
         <div className={classes.post}>
           <div
@@ -184,13 +206,11 @@ const Testdetailedpost = () => {
           </div>
           <br></br>
           <div className={classes.or}></div>
-          {state.children && state.children.map((child) => RenderTree(child, state.name))}
+          {state.children &&
+            state.children.map((child) => RenderTree(child, state.name))}
         </div>
       )}
     </div>
-
-
-    </Modal>
   );
 };
 
