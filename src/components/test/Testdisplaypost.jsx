@@ -6,8 +6,6 @@ const Testdisplaypost = (tree) => {
   const navigate = useNavigate();
 
   const load = () => {
-    console.log(tree.tree);
-    
     navigate("/testdetailedpost", { state: tree.tree });
   };
 

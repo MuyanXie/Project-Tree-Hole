@@ -1,18 +1,17 @@
 import { auth, db } from "../../firebase";
 import { useState } from "react";
 import { collection, addDoc, arrayUnion, doc, updateDoc } from "firebase/firestore";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AddCommentToComment = ({parentid, onClose}) => {
   const [formData, setFormData] = useState({
     comment: "",
   });
   const [errors, setErrors] = useState({});
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const addCommentHandler = (e) => {
     e.preventDefault();
-    console.log("parentid", parentid.parentid)
     let formErrors = {};
     if (!formData.comment) {
       formErrors.comment = "Enter a comment please!";
@@ -27,12 +26,12 @@ const AddCommentToComment = ({parentid, onClose}) => {
       }).then((docRef) => {
         setFormData({ comment: "" });
         setErrors({});
-        const commentref = doc(db, "comments", parentid.parentid);
+        const commentref = doc(db, "comments", parentid);
         updateDoc(commentref, {
           sons: arrayUnion(docRef.id),
         });
       }).then(()  => {
-        // navigate("/test")
+        navigate("/test")
       }
       );
     }
@@ -40,7 +39,6 @@ const AddCommentToComment = ({parentid, onClose}) => {
   };
 
   const onChange = (e) => {
-    console.log(parentid)
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
