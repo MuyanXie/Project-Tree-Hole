@@ -11,6 +11,7 @@ import {
 import Testdisplaypost from "./Testdisplaypost";
 import classes from "./Testgetposts.module.css";
 
+
 const Testgetposts = () => {
   const [posts, setPosts] = useState([]);
   const [trees, setTrees] = useState([]);
@@ -24,6 +25,7 @@ const Testgetposts = () => {
       );
       const getData = async () => {
         const querySnapshot = await getDocs(q);
+        console.log("querySnapshot", querySnapshot.docs);
         const data = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -56,7 +58,9 @@ const Testgetposts = () => {
         );
         const commentDocs = await Promise.all(
           commentRefs.map((ref) => getDoc(ref))
-        );
+        ).then((commentDocs) => {
+          console.log("commentDocs", commentDocs);
+        });
         const comments = commentDocs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -98,6 +102,7 @@ const Testgetposts = () => {
     if (posts.length > 0) {
       getTrees();
     }
+
   }, [posts]);
 
   return (
@@ -105,9 +110,9 @@ const Testgetposts = () => {
       <h1>My Posts</h1>
 
       <div className={classes.posts}>
-        {trees.map((tree) => (
-          <div key={tree.time}>
-            <Testdisplaypost tree={tree} />
+        {posts.map((post) => (
+          <div key={post.time}>
+            <Testdisplaypost post={post} />
           </div>
         ))}
       </div>

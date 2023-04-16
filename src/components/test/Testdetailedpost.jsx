@@ -3,7 +3,7 @@ import Badge from "react-bootstrap/Badge";
 import { useEffect, useState } from "react";
 import classes from "./Testdetailedpost.module.css";
 import { auth, db } from "../../firebase";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, getDoc, collection } from "firebase/firestore";
 import Modal from "./Modal";
 import AddCommentToComment from "./AddCommentToComment";
 
@@ -12,16 +12,36 @@ const Testdetailedpost = () => {
   const [like, setLike] = useState(false);
   const [show, setShow] = useState(false);
   const [parent, setParent] = useState("");
+  const [post, setPost] = useState({});
 
   const hideModal = () => {
     setShow(false);
   };
 
+  useEffect(() => { //get the post object from the database
+    console.log("state", state);
+    const collectionRef = collection(db, "posts");
+    const docRef = doc(collectionRef, state);
+    const getData = async () => {
+      const docSnap = await getDoc(docRef);
+      const data = {
+        ...docSnap.data(),
+        id: docSnap.id,
+        children : []
+      };
+      await setPost(data);
+
+    };
+    getData();
+
+  }, [state]);
+
   useEffect(() => {
-    if (state.likes.includes(auth.currentUser.uid)) {
+    console.log("post", post);
+    if (post.like && post.likes.includes(auth.currentUser.uid)) {
       setLike(true);
     }
-  }, [state]);
+  }, [post]);
 
   const RenderTree = (node, respondee) => {
 
@@ -122,14 +142,14 @@ const Testdetailedpost = () => {
   const likeHandler = () => {
     if (like) {
       setLike(false);
-      state.likes = state.likes.filter((uid) => uid !== auth.currentUser.uid);
+      post.likes = post.likes.filter((uid) => uid !== auth.currentUser.uid);
     } else {
       setLike(true);
-      state.likes.push(auth.currentUser.uid);
+      post.likes.push(auth.currentUser.uid);
     }
-    const postref = doc(db, "posts", state.id);
+    const postref = doc(db, "posts", post.id);
     updateDoc(postref, {
-      likes: state.likes,
+      likes: post.likes,
     });
   };
 
@@ -143,7 +163,7 @@ const Testdetailedpost = () => {
           />
         </Modal>
       )}
-      {state && (
+      {post && (
         <div className={classes.post}>
           <div
             style={{
@@ -152,13 +172,13 @@ const Testdetailedpost = () => {
               alignItems: "center",
             }}
           >
-            <p className={classes.author}>From: {state.name}</p>
+            <p className={classes.author}>From: {post.name}</p>
             <Badge bg="info">Certified</Badge>
           </div>
 
           <div className={classes.or}></div>
           <br></br>
-          <p className={classes.text}>{state.text}</p>
+          <p className={classes.text}>{post.text}</p>
           <br></br>
           <div className={classes.or}></div>
           <br></br>
@@ -206,8 +226,8 @@ const Testdetailedpost = () => {
           </div>
           <br></br>
           <div className={classes.or}></div>
-          {state.children &&
-            state.children.map((child) => RenderTree(child, state.name))}
+          {post.children &&
+            post.children.map((child) => RenderTree(child, post.name))}
         </div>
       )}
     </div>

@@ -31,6 +31,7 @@ const AddCommentToComment = ({parentid, onClose}) => {
           sons: arrayUnion(docRef.id),
         });
       }).then(()  => {
+        
         navigate("/test")
       }
       );
