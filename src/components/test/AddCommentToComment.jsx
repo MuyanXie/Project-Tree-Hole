@@ -57,7 +57,7 @@ const test = (e) => {
   };
 
   return (
-    <div>
+    <div className={classes.form}>
       {/* <form onSubmit={addCommentHandler}>
         <div
           style={{ margin: "none", boxShadow: "none", borderRadius: "none" }}
