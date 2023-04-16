@@ -1,0 +1,30 @@
+.form {
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    top: 20; */
+    /* height: 50vh; */
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+    /* margin: 0 auto;
+    align-self: center;
+    vertical-align: auto;
+    position: absolute; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: relative;
+}
+
+.or {
+    top: 0.45em;
+    flex-shrink: 1;
+    height: 1px;
+    position: relative;
+    flex-grow: 1;
+    background-color: rgba(74, 74, 74, 0.391);
+    display: block;
+}

@@ -9,6 +9,8 @@ import {
 } from "firebase/firestore";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import CloseButton from 'react-bootstrap/CloseButton';
+import classes from "./AddComment.module.css";
 
 const AddCommentToComment = ({ parentid, onClose }) => {
   const [formData, setFormData] = useState({
@@ -51,13 +53,12 @@ const test = (e) => {
   };
 
   const onChange = (e) => {
-    console.log("here")
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
     <div>
-      <form onSubmit={addCommentHandler}>
+      {/* <form onSubmit={addCommentHandler}>
         <div
           style={{ margin: "none", boxShadow: "none", borderRadius: "none" }}
         >
@@ -76,14 +77,17 @@ const test = (e) => {
         <button type="button" onClick={onClose}>
           Close
         </button>
-      </form>
+      </form> */}
 
-      <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
+      <Form className={classes.form}>
+        <Form.Group className="mb-3">
+          <CloseButton onClick={onClose} />
+          <div className={classes.or}></div>
+          <br></br>
+          <Form.Label>Enter Comment...</Form.Label>
           <Form.Control type="text" placeholder="Enter email" onChange={onChange} id="comment" name ="comment" value={formData.comment}/>
           <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
+            Say something nice for the community!
           </Form.Text>
           <Button variant="primary" type="submit" onClick={test}>
             Submit
