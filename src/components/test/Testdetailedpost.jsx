@@ -7,11 +7,11 @@ import { doc, updateDoc, getDoc, collection } from "firebase/firestore";
 import Modal from "./Modal";
 import AddCommentToComment from "./AddCommentToComment";
 
-const RenderTree = ({ id, respondee, setParent, setShow }) => {
+const RenderTree = ({ id, respondee, setParent, setShow, setWhich }) => {
   const [commentLike, setCommentLike] = useState(false);
   const [comment, setComment] = useState({});
 
-  // const comment = {}
+
 
   useEffect(() => {
     const collectionRef = collection(db, "comments");
@@ -49,6 +49,7 @@ const RenderTree = ({ id, respondee, setParent, setShow }) => {
 
   const onClickHandler = () => {
     setParent(id);
+    setWhich("comment");
     setShow(true);
   };
 
@@ -122,6 +123,7 @@ const RenderTree = ({ id, respondee, setParent, setShow }) => {
                 respondee={comment.name}
                 setParent={setParent}
                 setShow={setShow}
+                setWhich={setWhich}
               />
             ))}
         </div>
@@ -136,6 +138,7 @@ const Testdetailedpost = () => {
   const [show, setShow] = useState(false);
   const [parent, setParent] = useState("");
   const [post, setPost] = useState({});
+  const [which, setWhich] = useState("post");
 
   const hideModal = () => {
     setShow(false);
@@ -173,13 +176,16 @@ const Testdetailedpost = () => {
     });
   };
 
-  const commentHandler = () => {};
+  const commentHandler = () => {
+    setParent(post.id);
+    setShow(true);
+  };
 
   return (
     <div>
       {show && (
         <Modal onClose={hideModal}>
-          <AddCommentToComment parentid={parent} onClose={hideModal}/>
+          <AddCommentToComment parentid={parent} onClose={hideModal} which = {which}/>
         </Modal>
       )}
       {post && (
@@ -254,7 +260,7 @@ const Testdetailedpost = () => {
                 id={son}
                 respondee={post.name}
                 setParent={setParent}
-                setShow={setShow}
+                setShow={setWhich}
               />
             ))}
         </div>

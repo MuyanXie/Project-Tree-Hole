@@ -12,11 +12,16 @@ import Form from "react-bootstrap/Form";
 import CloseButton from "react-bootstrap/CloseButton";
 import classes from "./AddComment.module.css";
 
-const AddCommentToComment = ({ parentid, onClose, which }) => {
+const AddCommentToPost = ({ parentid, onClose }) => {
   const [formData, setFormData] = useState({
     comment: "",
   });
   const [errors, setErrors] = useState({});
+
+  const test = (e) => {
+    e.preventDefault();
+    console.log(formData.comment);
+  };
 
   const addCommentHandler = (e) => {
     e.preventDefault();
@@ -35,7 +40,7 @@ const AddCommentToComment = ({ parentid, onClose, which }) => {
         .then((docRef) => {
           setFormData({ comment: "" });
           setErrors({});
-          const commentref = doc(db, which, parentid);
+          const commentref = doc(db, "comments", parentid);
           updateDoc(commentref, {
             sons: arrayUnion(docRef.id),
           });
@@ -59,22 +64,21 @@ const AddCommentToComment = ({ parentid, onClose, which }) => {
           <br></br>
           <div className={classes.or}></div>
           <br></br>
-          <Form.Label className="form-label" style={{ fontSize: "15px" }}>
-            Enter your Comment...
-          </Form.Label>
-          <div class="input-group">
-            <textarea
-              class="form-control"
-              aria-label="With textarea"
-              onChange={onChange}
-              id="floatingInput"
-              name="comment"
-              value={formData.comment}
-              style={{ resize: "none" }}
-              rows="8"
-            ></textarea>
-          </div>
-          <br></br>
+          <Form.Label className="form-label" style={{fontSize : "15px"}}>
+            Enter your Comment...</Form.Label>
+            <div class="input-group">
+              <textarea
+                class="form-control"
+                aria-label="With textarea"
+                onChange={onChange}
+                id="floatingInput"
+                name="comment"
+                value={formData.comment}
+                style={{ resize: "none" }}
+                rows="8"
+              ></textarea>
+            </div>
+            <br></br>
           {errors.comment && (
             <div className="alert alert-danger" role="alert">
               {errors.comment}
@@ -94,4 +98,4 @@ const AddCommentToComment = ({ parentid, onClose, which }) => {
   );
 };
 
-export default AddCommentToComment;
+export default AddCommentToPost;
