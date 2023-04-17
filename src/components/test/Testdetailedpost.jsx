@@ -14,21 +14,21 @@ const RenderTree = ({ id, respondee, setParent, setShow }) => {
   // const comment = {}
 
   useEffect(() => {
-      const collectionRef = collection(db, "comments");
-      const docRef = doc(collectionRef, id);
-      const getComment = async () => {
-        const docSnap = await getDoc(docRef);
-        const data = {
-          ...docSnap.data(),
-          id: docSnap.id,
-        };
-        await setComment(data);
-        if (data.likes.includes(auth.currentUser.uid)) {
-          await setCommentLike(true);
-        }
+    const collectionRef = collection(db, "comments");
+    const docRef = doc(collectionRef, id);
+    const getComment = async () => {
+      const docSnap = await getDoc(docRef);
+      const data = {
+        ...docSnap.data(),
+        id: docSnap.id,
       };
-      getComment();
-    },[id]);
+      await setComment(data);
+      if (data.likes.includes(auth.currentUser.uid)) {
+        await setCommentLike(true);
+      }
+    };
+    getComment();
+  }, [id]);
 
   const likeCommentHandler = () => {
     if (comment.likes.includes(auth.currentUser.uid)) {
@@ -116,14 +116,14 @@ const RenderTree = ({ id, respondee, setParent, setShow }) => {
           <p>{comment.text}</p>
           <div className={classes.or}></div>
           {comment.sons &&
-            comment.sons.map((son) =>
-            <RenderTree
-            id={son}
-            respondee={comment.name}
-            setParent={setParent}
-            setShow={setShow}
-          />
-            )}
+            comment.sons.map((son) => (
+              <RenderTree
+                id={son}
+                respondee={comment.name}
+                setParent={setParent}
+                setShow={setShow}
+              />
+            ))}
         </div>
       )}
     </div>

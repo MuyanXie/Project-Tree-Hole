@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import CloseButton from 'react-bootstrap/CloseButton';
+import CloseButton from "react-bootstrap/CloseButton";
 import classes from "./AddComment.module.css";
 
 const AddCommentToComment = ({ parentid, onClose }) => {
@@ -18,10 +18,10 @@ const AddCommentToComment = ({ parentid, onClose }) => {
   });
   const [errors, setErrors] = useState({});
 
-const test = (e) => {
-  e.preventDefault();
-  console.log(formData.comment)
-}
+  const test = (e) => {
+    e.preventDefault();
+    console.log(formData.comment);
+  };
 
   const addCommentHandler = (e) => {
     e.preventDefault();
@@ -58,38 +58,38 @@ const test = (e) => {
 
   return (
     <div className={classes.form}>
-      {/* <form onSubmit={addCommentHandler}>
-        <div
-          style={{ margin: "none", boxShadow: "none", borderRadius: "none" }}
-        >
-          <label htmlFor="comment">Comment</label>
-          <textarea
-            className="form-control"
-            id="comment"
-            name="comment"
-            rows="3"
-            value={formData.comment}
-            onChange={onChange}
-          ></textarea>
-          {errors.comment && <div role="alert">{errors.comment}</div>}
-        </div>
-        <button type="submit">Submit</button>
-        <button type="button" onClick={onClose}>
-          Close
-        </button>
-      </form> */}
-
-      <Form className={classes.form}>
+      <Form>
         <Form.Group className="mb-3">
           <CloseButton onClick={onClose} />
+          <br></br>
           <div className={classes.or}></div>
           <br></br>
-          <Form.Label>Enter Comment...</Form.Label>
-          <Form.Control type="text" placeholder="Enter email" onChange={onChange} id="comment" name ="comment" value={formData.comment}/>
+          <Form.Label className="form-label" style={{fontSize : "15px"}}>
+            Enter your Comment...</Form.Label>
+            <div class="input-group">
+              <textarea
+                class="form-control"
+                aria-label="With textarea"
+                onChange={onChange}
+                id="floatingInput"
+                name="comment"
+                value={formData.comment}
+                style={{ resize: "none" }}
+                rows="8"
+              ></textarea>
+            </div>
+            <br></br>
+          {errors.comment && (
+            <div className="alert alert-danger" role="alert">
+              {errors.comment}
+            </div>
+          )}
           <Form.Text className="text-muted">
             Say something nice for the community!
           </Form.Text>
-          <Button variant="primary" type="submit" onClick={test}>
+          <br></br>
+          <br></br>
+          <Button variant="primary" type="submit" onClick={addCommentHandler}>
             Submit
           </Button>
         </Form.Group>
