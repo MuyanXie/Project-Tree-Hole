@@ -30,7 +30,7 @@ const AddCommentToPost = ({ parentid, onClose }) => {
       formErrors.comment = "Enter a comment please!";
     }
     if (Object.keys(formErrors).length === 0) {
-      addDoc(collection(db, "comments"), {
+      addDoc(collection(db, "posts"), {
         name: auth.currentUser.displayName,
         text: formData.comment,
         likes: [],
@@ -40,7 +40,7 @@ const AddCommentToPost = ({ parentid, onClose }) => {
         .then((docRef) => {
           setFormData({ comment: "" });
           setErrors({});
-          const commentref = doc(db, "comments", parentid);
+          const commentref = doc(db, "posts", parentid);
           updateDoc(commentref, {
             sons: arrayUnion(docRef.id),
           });
