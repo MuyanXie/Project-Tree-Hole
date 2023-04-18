@@ -11,8 +11,6 @@ const RenderTree = ({ id, respondee, setParent, setShow, setWhich }) => {
   const [commentLike, setCommentLike] = useState(false);
   const [comment, setComment] = useState({});
 
-
-
   useEffect(() => {
     const collectionRef = collection(db, "comments");
     const docRef = doc(collectionRef, id);
@@ -184,7 +182,7 @@ const Testdetailedpost = () => {
   return (
     <div>
       {show && (
-        <Modal onClose={hideModal}>
+        <Modal>
           <AddCommentToComment parentid={parent} onClose={hideModal} which = {which}/>
         </Modal>
       )}
