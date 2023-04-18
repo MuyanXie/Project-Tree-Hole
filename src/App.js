@@ -59,7 +59,9 @@ function App() {
         <Route
           path="/verifyemail"
           element={
-            user && !user.emailVerified ? (
+            user 
+            // && !user.emailVerified
+             ? (
               <VerifyEmail />
             ) : (
               <Navigate to="/test" />

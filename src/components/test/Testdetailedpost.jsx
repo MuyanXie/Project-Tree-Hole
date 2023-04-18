@@ -6,6 +6,7 @@ import { auth, db } from "../../firebase";
 import { doc, updateDoc, getDoc, collection } from "firebase/firestore";
 import Modal from "./Modal";
 import AddCommentToComment from "./AddCommentToComment";
+import Header from "../display/Header";
 
 const RenderTree = ({ id, respondee, setParent, setShow, setWhich }) => {
   const [commentLike, setCommentLike] = useState(false);
@@ -186,6 +187,7 @@ const Testdetailedpost = () => {
           <AddCommentToComment parentid={parent} onClose={hideModal} which = {which}/>
         </Modal>
       )}
+      <Header />
       {post && (
         <div className={classes.post}>
           <div
