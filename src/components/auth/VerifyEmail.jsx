@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 const VerifyEmail = () => {
   const auth = getAuth();
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const timerId = setInterval(() => {
@@ -13,14 +12,7 @@ const VerifyEmail = () => {
       auth.currentUser
         .reload()
         .then(() => {
-          console.log("reloaded");
-          console.log(auth.currentUser);
-          setUser(auth.currentUser);
-        })
-        .then(() => {
-          console.log(auth.currentUser.emailVerified)
           if (auth.currentUser.emailVerified) {
-            console.log("verified");
             navigate("/home");
           }
         });
@@ -28,11 +20,15 @@ const VerifyEmail = () => {
     return () => clearInterval(timerId);
   }, [auth, navigate]);
 
+  useEffect(() => {
+    if (!auth.currentUser.emailVerified) {
+      sendEmailVerification(auth.currentUser);
+    }
+  }, [auth]);
+
+
   const handleClick = () => {
-    sendEmailVerification(auth.currentUser).then(() => {
-      console.log("Email verification sent!");
-      console.log(auth.currentUser);
-    });
+    sendEmailVerification(auth.currentUser);
   };
 
   return (
