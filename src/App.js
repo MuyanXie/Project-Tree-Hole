@@ -15,8 +15,9 @@ import SignOut from "./components/auth/SignOut";
 import Test from "./components/test/Test";
 import Testgetposts from "./components/test/Testgetposts";
 import Testdetailedpost from "./components/test/Testdetailedpost";
+import Searchresultpage from "./components/utils/Searchresultpage";
 import { auth } from "./firebase";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -59,9 +60,7 @@ function App() {
         <Route
           path="/verifyemail"
           element={
-            user 
-            // && !user.emailVerified
-             ? (
+            user && !user.emailVerified ? (
               <VerifyEmail />
             ) : (
               <Navigate to="/test" />
@@ -70,6 +69,7 @@ function App() {
         />
         <Route path="/testgetposts" element={<Testgetposts />} />
         <Route path="/testdetailedpost" element={<Testdetailedpost />} />
+        <Route path="/searchresultpage" element={<Searchresultpage />} />
       </Routes>
     </Router>
   );
