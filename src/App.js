@@ -16,6 +16,7 @@ import Test from "./components/test/Test";
 import Testgetposts from "./components/test/Testgetposts";
 import Testdetailedpost from "./components/test/Testdetailedpost";
 import Searchresultpage from "./components/utils/Searchresultpage";
+import Profile from "./components/display/Profile";
 import { auth } from "./firebase";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -70,6 +71,7 @@ function App() {
         <Route path="/testgetposts" element={<Testgetposts />} />
         <Route path="/testdetailedpost" element={<Testdetailedpost />} />
         <Route path="/searchresultpage" element={<Searchresultpage />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );

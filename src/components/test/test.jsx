@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
+import { IconArrowLeft, IconHeart } from '@tabler/icons-react';
 
 function Test({ user }) {
   const [data, setData] = useState(null);
   const [text, setText] = useState("");
+  const [like, setLike] = useState(false);
+
 
   useEffect(() => {
     auth.currentUser.getIdToken(true);
@@ -16,6 +19,10 @@ function Test({ user }) {
     };
     getData();
   }, [user.uid]);
+
+  const onClick = () => {
+    setLike(!like);
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,6 +37,9 @@ function Test({ user }) {
   return (
     <div>
       <h1>Secret Page</h1>
+      <IconArrowLeft color="red" size={48} />
+      <IconHeart fill= {like ? "red" : "none" } role = "button"
+      onClick={onClick}/>
       <form onSubmit={handleSubmit}>
         <label>
           Add Data:
