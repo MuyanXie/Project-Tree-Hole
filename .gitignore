@@ -27,3 +27,5 @@ firebase-debug.log
 /.firebase
 ui-debug.log
 .firebase
+
+src/firebase.js
