@@ -11,7 +11,6 @@ function Test({ user }) {
 
   useEffect(() => {
     auth.currentUser.getIdToken(true);
-    console.log(auth.currentUser);
     const q = query(collection(db, "data"), where("uid", "==", user.uid));
     const getData = async () => {
       const querySnapshot = await getDocs(q);
