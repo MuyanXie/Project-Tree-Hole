@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import {query, collection, where, getDocs} from "firebase/firestore";
-import Testdisplaypost from "../test/Testdisplaypost";
+import PostCard from "../posts/PostCard";
 
 const Searchresult = (content) => {
   const [searchResults, setSearchResults] = useState([]);
@@ -21,9 +21,8 @@ const Searchresult = (content) => {
         ...doc.data(),
       }));
       setSearchResults(results);
-      console.log(results);
     };
-    getresult().then(() => console.log(searchResults));
+    getresult()
   }, [content.content]);
 
   return (
@@ -33,7 +32,7 @@ const Searchresult = (content) => {
       {searchResults && 
         searchResults.map((result) => (
             <div key={result.time}>
-                <Testdisplaypost post={result} />
+                <PostCard post={result} />
             </div>
         ))
       }
