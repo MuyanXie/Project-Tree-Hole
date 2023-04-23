@@ -1,24 +1,21 @@
 import { getAuth, sendEmailVerification } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const VerifyEmail = () => {
   const auth = getAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const timerId = setInterval(() => {
-      console.log("unsubscribing");
       auth.currentUser
         .reload()
         .then(() => {
           if (auth.currentUser.emailVerified) {
-            navigate("/home");
+            window.location.reload();
           }
         });
     }, 2000);
     return () => clearInterval(timerId);
-  }, [auth, navigate]);
+  }, [auth]);
 
   useEffect(() => {
     if (!auth.currentUser.emailVerified) {
