@@ -45,6 +45,7 @@ const Header = ({ name }) => {
               <NavDropdown.Divider />
               <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
             </NavDropdown>
+            <Nav.Link href="#about">About</Nav.Link>
             <Nav.Link href="/signout">Logout</Nav.Link>
           </Nav>
           <Form style={{ display: "flex", alignItems: "center" }}>
