@@ -12,6 +12,7 @@ function SignOut() {
     auth
       .signOut()
       .then(() => {
+        localStorage.removeItem("token");
         navigate("/signin");
       })
       .catch((error) => {

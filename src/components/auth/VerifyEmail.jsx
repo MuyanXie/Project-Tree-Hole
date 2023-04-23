@@ -8,8 +8,10 @@ const VerifyEmail = () => {
     const timerId = setInterval(() => {
       auth.currentUser
         .reload()
-        .then(() => {
+        .then(async() => {
           if (auth.currentUser.emailVerified) {
+            const token = await auth.currentUser.getIdToken();
+            localStorage.setItem("token", token);
             window.location.reload();
           }
         });
