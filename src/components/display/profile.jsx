@@ -78,6 +78,8 @@ const Profile = () => {
             box-shadow: 0 1px 20px 0 rgba(69,90,100,0.08);
             border: none;
             margin-bottom: 30px;
+            width: 800px;
+            height: 500px;
         }
         .m-r-0 {
             margin-right: 0px;
@@ -89,20 +91,22 @@ const Profile = () => {
             border-radius: 5px 0 0 5px;
         }
         .bg-c-lite-green {
-                background: -webkit-gradient(linear, left top, right top, from(#f29263), to(#ee5a6f));
+            background: -webkit-gradient(linear, left top, right top, from(#f29263), to(#ee5a6f));
             background: linear-gradient(to right, #ee5a6f, #f29263);
         }
         .user-profile {
             padding: 20px 0;
+            height: 500px;
         }
         .card-block {
             padding: 1.25rem;
+            height: 500px;
         }
         .m-b-25 {
             margin-bottom: 25px;
         }
         .img-radius {
-            border-radius: 50px;
+            border-radius: 100px;
         }
         h6 {
             font-size: 14px;
@@ -169,7 +173,7 @@ const Profile = () => {
         .justify-content-center{
           display: flex;
           justify-content: center;
-          margin: 0 auto;
+          width: 1050px;
         }
           `}
         </style>
@@ -186,14 +190,23 @@ const Profile = () => {
                             alt=""
                             src={auth.currentUser.photoURL}
                             class="img-radius"
-                            style={{ width: 100, height: 100 }}
+                            style={{ width: 200, height: 200 }}
                           />
                         ) : (
-                          <IconUserCircle size={100} />
+                          <IconUserCircle size={200} />
                         )}
                       </div>
-                      <h6 class="f-w-600">Hembo Tingor</h6>
-                      <p>Web Designer</p>
+                      <h6
+                        class="f-w-600"
+                        style={{ marginTop: "50px", fontSize: "x-large" }}
+                      >
+                        {auth.currentUser.displayName != null ? (
+                          auth.currentUser.displayName
+                        ) : (
+                          "A Mysterious User"
+                        )}
+                      </h6>
+                      <p>Designer</p>
                       <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                     </div>
                   </div>
@@ -205,8 +218,10 @@ const Profile = () => {
                       </h6>
                       <div class="row">
                         <div class="col-sm-6">
-                          <p class="m-b-10 f-w-600">Email</p>
-                          <h6 class="text-muted f-w-400">rntng@gmail.com</h6>
+                          <p class="m-b-10 f-w-600">
+                            Email
+                          </p>
+                          <h6 class="text-muted f-w-400">{auth.currentUser.email}</h6>
                         </div>
                         <div class="col-sm-6">
                           <p class="m-b-10 f-w-600">Phone</p>
