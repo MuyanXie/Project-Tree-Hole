@@ -7,6 +7,7 @@ import { doc, updateDoc, getDoc, collection } from "firebase/firestore";
 import Modal from "./Modal";
 import AddCommentToComment from "./AddCommentToComment";
 import Header from "../display/Header";
+import { IconHeart, IconMessageCircle } from "@tabler/icons-react";
 
 const RenderTree = ({ id, respondee, setParent, setShow, setWhich }) => {
   const [commentLike, setCommentLike] = useState(false);
@@ -68,49 +69,13 @@ const RenderTree = ({ id, respondee, setParent, setShow, setWhich }) => {
               {comment.name} responds to {respondee}
             </h6>
             <div style={{ display: "flex", alignItems: "center" }}>
-              <button
-                className={classes.transparent_button}
-                style={{ marginRight: "20px" }}
+              <IconHeart
+                fill={commentLike ? "red" : "none"}
+                role="button"
                 onClick={likeCommentHandler}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-heart"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  role="button"
-                  fill={commentLike ? "red" : "none"}
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-                </svg>
-              </button>
-              <button
-                className={classes.transparent_button}
-                onClick={onClickHandler}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-message-circle"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  role="button"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M3 20l1.3 -3.9c-2.324 -3.437 -1.426 -7.872 2.1 -10.374c3.526 -2.501 8.59 -2.296 11.845 .48c3.255 2.777 3.695 7.266 1.029 10.501c-2.666 3.235 -7.615 4.215 -11.574 2.293l-4.7 1" />
-                </svg>
-              </button>
+                style={{ marginRight: "20px" }}
+              />
+              <IconMessageCircle role="button" onClick={onClickHandler} />
             </div>
           </div>
           <p>{comment.text}</p>
@@ -184,10 +149,15 @@ const Testdetailedpost = () => {
     <div>
       {show && (
         <Modal>
-          <AddCommentToComment parentid={parent} onClose={hideModal} which = {which}/>
+          <AddCommentToComment
+            parentid={parent}
+            onClose={hideModal}
+            which={which}
+          />
         </Modal>
       )}
-      <Header />
+      {!show && <Header />}
+
       {post && (
         <div className={classes.post}>
           <div
@@ -208,50 +178,14 @@ const Testdetailedpost = () => {
           <div className={classes.or}></div>
           <br></br>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <button
-              className={classes.transparent_button}
-              style={{ marginRight: "50px" }}
-              onClick={likeHandler}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-heart"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                role="button"
+              <IconHeart
                 fill={like ? "red" : "none"}
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-              </svg>
-            </button>
-            <button
-              className={classes.transparent_button}
-              onClick={commentHandler}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-message-circle"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-                stroke="currentColor"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
                 role="button"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M3 20l1.3 -3.9c-2.324 -3.437 -1.426 -7.872 2.1 -10.374c3.526 -2.501 8.59 -2.296 11.845 .48c3.255 2.777 3.695 7.266 1.029 10.501c-2.666 3.235 -7.615 4.215 -11.574 2.293l-4.7 1" />
-              </svg>
-            </button>
-          </div>
+                onClick={likeHandler}
+                style={{ marginRight: "20px" }}
+              />
+              <IconMessageCircle role="button" onClick={commentHandler} />
+            </div>
           <br></br>
           <div className={classes.or}></div>
           {post.sons &&
@@ -260,7 +194,8 @@ const Testdetailedpost = () => {
                 id={son}
                 respondee={post.name}
                 setParent={setParent}
-                setShow={setWhich}
+                setWhich={setWhich}
+                setShow={setShow}
               />
             ))}
         </div>
