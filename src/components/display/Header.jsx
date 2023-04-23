@@ -7,7 +7,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-function Header() {
+const Header = ({ name }) => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -28,7 +28,7 @@ function Header() {
   return (
     <Navbar bg="light" expand="lg" sticky="top">
       <Container fluid>
-        <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
+        <Navbar.Brand>{name}</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -36,21 +36,16 @@ function Header() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link href="/home">Home</Nav.Link>
-            <Nav.Link href="#action2">Link</Nav.Link>
-            <NavDropdown title="Link" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">
-                Another action
-              </NavDropdown.Item>
+            <Nav.Link href="#feed">Feed</Nav.Link>
+            <Nav.Link href="#newpost">New...</Nav.Link>
+            <Nav.Link href="#messages">Messages</Nav.Link>
+            <NavDropdown title="Me" id="navbarScrollingDropdown">
+              <NavDropdown.Item href="/myposts">My Posts</NavDropdown.Item>
+              <NavDropdown.Item href="#action3">Involved In...</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action5">
-                Something else here
-              </NavDropdown.Item>
+              <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="#" disabled>
-              Link
-            </Nav.Link>
+            <Nav.Link href="/signout">Logout</Nav.Link>
           </Nav>
           <Form style={{ display: "flex", alignItems: "center" }}>
             <Form.Control
@@ -79,6 +74,6 @@ function Header() {
       </Container>
     </Navbar>
   );
-}
+};
 
 export default Header;
