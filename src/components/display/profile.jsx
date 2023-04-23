@@ -7,7 +7,6 @@ import { IconUserCircle, IconEdit } from "@tabler/icons-react";
 import Modal from "../posts/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import classes from "./Profile.module.css";
 
 const ChangeImage = ({ onClose }) => {
@@ -20,44 +19,65 @@ const ChangeImage = ({ onClose }) => {
 
     if (file && allowedTypes.includes(file.type) && file.size <= maxSize) {
       setImage(file);
+      console.log("suceess ");
     } else {
       setImage(null);
       alert("Please select a PNG or JPEG file that is less than 2MB in size.");
     }
   };
 
-  const handleImageUpload = () => {
+  const handleImageUpload = (event) => {
+    event.preventDefault();
     if (!image) return;
     const imageRef = ref(storage, `users/${auth.currentUser.uid}`);
-    uploadBytes(imageRef, image).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((downloadURL) => {
-        updateProfile(auth.currentUser, {
-          photoURL: downloadURL,
-        }).then(() => {
-          window.location.reload();
+    try {
+      uploadBytes(imageRef, image).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((downloadURL) => {
+          updateProfile(auth.currentUser, {
+            photoURL: downloadURL,
+          }).then(() => {
+            window.location.reload();
+          });
         });
       });
-    });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div>
-      <Form className={classes.form}>
-        <Form.Group className="mb-3">
-          <CloseButton onClick={onClose} />
-          <br></br>
-          <div className={classes.or}></div>
-          <Form.Label>Change Profile Picture</Form.Label>
-          <IconUserCircle size={100} />
-          <br></br>
-          <input
-            type="file"
-            accept="image/png, image/jpeg"
-            onChange={handleImageChange}
-          />
-          <button onClick={handleImageUpload}>Upload</button>
-        </Form.Group>
-      </Form>
+      <CloseButton onClick={onClose} style={{ fontSize: "large" }} />
+      <br></br>
+      <div className={classes.or}></div>
+      <form className={classes.form}>
+        <IconUserCircle
+          size={400}
+          stroke-width={0.75}
+          role="img"
+          color="#f29263"
+          style={{ margin: "auto", display: "block" }}
+        />
+
+        <br></br>
+
+        <input
+          class="form-control"
+          type="file"
+          id="formFile"
+          style={{ width: "60%", margin: "auto", display: "block" }}
+          accept="image/png, image/jpeg"
+          onChange={handleImageChange}
+        ></input>
+        <br></br>
+        <br></br>
+        <Button
+          onClick={handleImageUpload}
+          style={{ width: "60%", margin: "auto", display: "block" }}
+        >
+          Upload
+        </Button>
+      </form>
     </div>
   );
 };
@@ -84,7 +104,6 @@ const Profile = () => {
         </Modal>
       )}
       {show && <Header name="Profile" />}
-
       <div class="page-content page-container" id="page-content">
         <style>
           {`
