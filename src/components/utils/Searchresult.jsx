@@ -7,7 +7,6 @@ const Searchresult = (content) => {
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    console.log(content.content);
     const getresult = async () => {
       const q = query(
         collection(db, "posts")
@@ -15,7 +14,6 @@ const Searchresult = (content) => {
         ,where('text', '<=', content.content+'z')
       );
       const querySnapshot = await getDocs(q);
-      console.log(querySnapshot)
       const results = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
