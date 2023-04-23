@@ -3,9 +3,14 @@ import { auth, storage } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
 import Header from "./Header";
-import { IconUserCircle } from "@tabler/icons-react";
+import { IconUserCircle, IconEdit } from "@tabler/icons-react";
+import Modal from "../posts/Modal";
+import CloseButton from "react-bootstrap/CloseButton";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import classes from "./Profile.module.css";
 
-const Profile = () => {
+const ChangeImage = ({ onClose }) => {
   const [image, setImage] = useState(null);
 
   const handleImageChange = (event) => {
@@ -36,16 +41,50 @@ const Profile = () => {
   };
 
   return (
+    <div>
+      <Form className={classes.form}>
+        <Form.Group className="mb-3">
+          <CloseButton onClick={onClose} />
+          <br></br>
+          <div className={classes.or}></div>
+          <Form.Label>Change Profile Picture</Form.Label>
+          <IconUserCircle size={100} />
+          <br></br>
+          <input
+            type="file"
+            accept="image/png, image/jpeg"
+            onChange={handleImageChange}
+          />
+          <button onClick={handleImageUpload}>Upload</button>
+        </Form.Group>
+      </Form>
+    </div>
+  );
+};
+
+const Profile = () => {
+  const [show, setShow] = useState(true);
+  const [showEditImage, setShowEditImage] = useState(false);
+
+  const onClickImageHandler = () => {
+    setShow(false);
+    setShowEditImage(true);
+  };
+
+  const hideModal = () => {
+    setShowEditImage(false);
+    setShow(true);
+  };
+
+  return (
     <>
-      <Header name="Profile" />
-      <div>
-        <input
-          type="file"
-          accept="image/png, image/jpeg"
-          onChange={handleImageChange}
-        />
-        <button onClick={handleImageUpload}>Upload</button>
-      </div>
+      {showEditImage && (
+        <Modal>
+          <ChangeImage onClose={hideModal} />
+        </Modal>
+      )}
+      {show && <Header name="Profile" />}
+
       <div class="page-content page-container" id="page-content">
         <style>
           {`
@@ -185,60 +224,204 @@ const Profile = () => {
                   <div class="col-sm-4 bg-c-lite-green user-profile">
                     <div class="card-block text-center text-white">
                       <div class="m-b-25">
-                        {auth.currentUser.photoURL != null ? (
-                          <img
-                            alt=""
-                            src={auth.currentUser.photoURL}
-                            class="img-radius"
-                            style={{ width: 200, height: 200 }}
+                        <div>
+                          {auth.currentUser.photoURL != null ? (
+                            <img
+                              alt=""
+                              src={auth.currentUser.photoURL}
+                              class="img-radius"
+                              style={{ width: 200, height: 200 }}
+                            />
+                          ) : (
+                            <IconUserCircle size={200} />
+                          )}
+                          <IconEdit
+                            size={20}
+                            role="button"
+                            style={{ marginTop: "180px" }}
+                            onClick={onClickImageHandler}
                           />
-                        ) : (
-                          <IconUserCircle size={200} />
-                        )}
+                        </div>
                       </div>
-                      <h6
-                        class="f-w-600"
-                        style={{ marginTop: "50px", fontSize: "x-large" }}
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
                       >
-                        {auth.currentUser.displayName != null ? (
-                          auth.currentUser.displayName
-                        ) : (
-                          "A Mysterious User"
-                        )}
-                      </h6>
-                      <p>Designer</p>
+                        <h6
+                          class="f-w-600"
+                          style={{ marginTop: "30px", fontSize: "x-large" }}
+                        >
+                          {auth.currentUser.displayName != null
+                            ? auth.currentUser.displayName
+                            : "A Mysterious User"}
+                        </h6>
+                        <IconEdit
+                          size={20}
+                          role="button"
+                          style={{ marginTop: "25px" }}
+                        />
+                      </div>
+                      <div>
+                        <p
+                          style={{
+                            marginTop: "25px",
+                            alignContent: "center",
+                            marginBottom: "5px",
+                          }}
+                        >
+                          afqiowefno qwefioqwfn sadfioqwjef asdifqwjoen
+                          caioewjfqwoifjwqofiwo
+                        </p>
+                        <IconEdit size={20} role="button" />
+                      </div>
                       <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                     </div>
                   </div>
                   <div class="col-sm-8">
-                    <br></br>
                     <div class="card-block">
-                      <h6 class="m-b-20 p-b-5 b-b-default f-w-600">
-                        Information
+                      <br></br>
+                      <h6
+                        class="m-b-20 p-b-5 b-b-default f-w-600"
+                        style={{ fontSize: "xx-large" }}
+                      >
+                        Personal Information
                       </h6>
                       <div class="row">
                         <div class="col-sm-6">
-                          <p class="m-b-10 f-w-600">
+                          <p
+                            class="m-b-10 f-w-600"
+                            style={{ fontSize: "x-large" }}
+                          >
                             Email
                           </p>
-                          <h6 class="text-muted f-w-400">{auth.currentUser.email}</h6>
+                          <h6
+                            class="text-muted f-w-400"
+                            style={{ fontSize: "medium" }}
+                          >
+                            {auth.currentUser.email}
+                          </h6>
                         </div>
                         <div class="col-sm-6">
-                          <p class="m-b-10 f-w-600">Phone</p>
-                          <h6 class="text-muted f-w-400">98979989898</h6>
+                          <p
+                            class="m-b-10 f-w-600"
+                            style={{ fontSize: "x-large" }}
+                          >
+                            CNet ID
+                          </p>
+                          <h6
+                            class="text-muted f-w-400"
+                            style={{ fontSize: "medium" }}
+                          >
+                            {auth.currentUser.email.split("@")[0]}
+                          </h6>
                         </div>
                       </div>
-                      <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">
-                        Projects
+
+                      <br></br>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "left",
+                              alignItems: "center",
+                            }}
+                          >
+                            <p
+                              class="m-b-10 f-w-600"
+                              style={{ fontSize: "x-large", marginRight: 10 }}
+                            >
+                              Year
+                            </p>
+                            <IconEdit size={20} role="button" />
+                          </div>
+                          <h6
+                            class="text-muted f-w-400"
+                            style={{ fontSize: "medium" }}
+                          >
+                            Not Known
+                          </h6>
+                        </div>
+                        <div class="col-sm-6">
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "left",
+                              alignItems: "center",
+                            }}
+                          >
+                            <p
+                              class="m-b-10 f-w-600"
+                              style={{ fontSize: "x-large", marginRight: 10 }}
+                            >
+                              Major
+                            </p>
+                            <IconEdit size={20} role="button" />
+                          </div>
+                          <h6
+                            class="text-muted f-w-400"
+                            style={{ fontSize: "medium" }}
+                          >
+                            Not Known
+                          </h6>
+                        </div>
+                      </div>
+                      <br></br>
+                      <h6
+                        class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"
+                        style={{ fontSize: "xx-large" }}
+                      >
+                        More . . .
                       </h6>
                       <div class="row">
                         <div class="col-sm-6">
-                          <p class="m-b-10 f-w-600">Recent</p>
-                          <h6 class="text-muted f-w-400">Sam Disuja</h6>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "left",
+                              alignItems: "center",
+                            }}
+                          >
+                            <p
+                              class="m-b-10 f-w-600"
+                              style={{ fontSize: "x-large", marginRight: 10 }}
+                            >
+                              Gender
+                            </p>
+                            <IconEdit size={20} role="button" />
+                          </div>
+                          <h6
+                            class="text-muted f-w-400"
+                            style={{ fontSize: "large" }}
+                          >
+                            Male
+                          </h6>
                         </div>
                         <div class="col-sm-6">
-                          <p class="m-b-10 f-w-600">Most Viewed</p>
-                          <h6 class="text-muted f-w-400">Dinoter husainm</h6>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "left",
+                              alignItems: "center",
+                            }}
+                          >
+                            <p
+                              class="m-b-10 f-w-600"
+                              style={{ fontSize: "x-large", marginRight: 10 }}
+                            >
+                              Region
+                            </p>
+                            <IconEdit size={20} role="button" />
+                          </div>
+                          <h6
+                            class="text-muted f-w-400"
+                            style={{ fontSize: "large" }}
+                          >
+                            USA
+                          </h6>
                         </div>
                       </div>
                       <br></br>

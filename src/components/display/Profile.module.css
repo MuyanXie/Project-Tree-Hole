@@ -1,0 +1,19 @@
+.form {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    top: 20;
+    width: 400px;
+    height: 600px;
+}
+
+.or {
+    top: 0.45em;
+    flex-shrink: 1;
+    height: 1px;
+    position: relative;
+    flex-grow: 1;
+    background-color: rgba(74, 74, 74, 0.391);
+    display: block;
+}
