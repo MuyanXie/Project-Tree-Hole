@@ -21,10 +21,8 @@ const SignIn = () => {
         email,
         password
       );
-      const token = await userCredential.user.getIdToken();
-      localStorage.setItem("token", token);
       if (userCredential.user.emailVerified) {
-        navigate("/home");
+        navigate("/myposts");
       } else {
         navigate("/verifyemail");
       }

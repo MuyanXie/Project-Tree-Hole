@@ -2,8 +2,9 @@
 //TODO: finish the styling of the form
 //TODO: add the error handling sent from the server
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import React, { useState } from "react";
+import { v4 as uuid } from 'uuid';
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import logo from "../../static/pics/University_of_Chicago-Logo.wine.png";
@@ -40,8 +41,10 @@ const SignUp = () => {
     }
     if (Object.keys(formErrors).length === 0) {
       createUserWithEmailAndPassword(auth, formData.email, formData.password)
-        .then((userCredential) => {
-          console.log(userCredential);
+        .then(() => {
+          updateProfile(auth.currentUser, {
+            displayName: "User " + uuid().slice(0, 5)
+          });
           navigate("/verifyemail");
         })
         .catch((error) => {

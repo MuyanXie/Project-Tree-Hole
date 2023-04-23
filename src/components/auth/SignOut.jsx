@@ -12,7 +12,6 @@ function SignOut() {
     auth
       .signOut()
       .then(() => {
-        localStorage.clear();
         navigate("/signin");
       })
       .catch((error) => {
