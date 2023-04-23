@@ -52,7 +52,7 @@ function Header() {
               Link
             </Nav.Link>
           </Nav>
-          <Form>
+          <Form style={{ display: "flex", alignItems: "center" }}>
             <Form.Control
               type="search"
               placeholder="Search"
@@ -61,14 +61,17 @@ function Header() {
               name="content"
               value={formData.content}
               onChange={onChange}
-              onKeyPress={event => {
-                if (event.key === 'Enter') {
+              onKeyPress={(event) => {
+                if (event.key === "Enter") {
                   onClickHandler(event);
                 }
-              }
-              }
+              }}
             />
-            <Button variant="outline-success" onClick={onClickHandler}>
+            <Button
+              variant="outline-success"
+              onClick={onClickHandler}
+              className="me-2"
+            >
               Search
             </Button>
           </Form>
