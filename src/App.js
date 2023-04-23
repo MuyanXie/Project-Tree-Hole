@@ -12,9 +12,8 @@ import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
 import VerifyEmail from "./components/auth/VerifyEmail";
 import SignOut from "./components/auth/SignOut";
-import Test from "./components/test/Test";
-import Testgetposts from "./components/test/Testgetposts";
-import Testdetailedpost from "./components/test/Testdetailedpost";
+import MyPosts from "./components/posts/MyPosts";
+import PostDetail from "./components/posts/PostDetail";
 import Searchresultpage from "./components/utils/Searchresultpage";
 import Profile from "./components/display/Profile";
 import { auth } from "./firebase";
@@ -40,38 +39,122 @@ function App() {
     <Router>
       <Routes>
         <Route
-          path="/test"
+          path="/myposts"
           element={
-            user && user.emailVerified ? (
-              <Test user={user} />
+            user ? (
+              user.emailVerified ? (
+                <MyPosts />
+              ) : (
+                <Navigate to="/verifyemail" />
+              )
             ) : (
               <Navigate to="/signin" />
             )
           }
         />
+
         <Route
           path="/signin"
-          element={!user ? <SignIn /> : <Navigate to="/test" />}
-        />
-        <Route path="/signout" element={<SignOut />} />
-        <Route
-          path="/signup"
-          element={!user ? <SignUp /> : <Navigate to="/test" />}
-        />
-        <Route
-          path="/verifyemail"
           element={
-            user && !user.emailVerified ? (
-              <VerifyEmail />
+            !user ? (
+              <SignIn />
+            ) : user.emailVerified ? (
+              <Navigate to="/myposts" />
             ) : (
-              <Navigate to="/test" />
+              <Navigate to="/verifyemail" />
             )
           }
         />
-        <Route path="/testgetposts" element={<Testgetposts />} />
-        <Route path="/testdetailedpost" element={<Testdetailedpost />} />
-        <Route path="/searchresultpage" element={<Searchresultpage />} />
-        <Route path="/profile" element={<Profile />} />
+
+        <Route path="/signout" element={<SignOut />} />
+
+        <Route
+          path="/signup"
+          element={
+            !user ? (
+              <SignUp />
+            ) : user.emailVerified ? (
+              <Navigate to="/myposts" />
+            ) : (
+              <Navigate to="/verifyemail" />
+            )
+          }
+        />
+
+        <Route
+          path="/verifyemail"
+          element={
+            !user ? (
+              <Navigate to="/signin" />
+            ) : user.emailVerified ? (
+              <Navigate to="/myposts" />
+            ) : (
+              <VerifyEmail />
+            )
+          }
+        />
+
+        <Route
+          path="/searchresultpage"
+          element={
+            user ? (
+              user.emailVerified ? (
+                <Searchresultpage />
+              ) : (
+                <Navigate to="/verifyemail" />
+              )
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            user ? (
+              user.emailVerified ? (
+                <Profile />
+              ) : (
+                <Navigate to="/verifyemail" />
+              )
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
+
+        <Route
+          path="/"
+          element={
+            user ? (
+              user.emailVerified ? (
+                <Navigate to="/myposts" />
+              ) : (
+                <Navigate to="/verifyemail" />
+              )
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
+
+        <Route path="*" element={<Navigate to="/" />} />
+
+        <Route
+          path="/postdetail"
+          element={
+            user ? (
+              user.emailVerified ? (
+                <PostDetail />
+              ) : (
+                <Navigate to="/verifyemail" />
+              )
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
       </Routes>
     </Router>
   );
