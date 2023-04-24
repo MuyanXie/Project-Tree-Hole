@@ -16,6 +16,7 @@ import MyPosts from "./components/posts/MyPosts";
 import PostDetail from "./components/posts/PostDetail";
 import Searchresultpage from "./components/utils/Searchresultpage";
 import Profile from "./components/display/Profile";
+import About from "./components/display/About";
 import { auth } from "./firebase";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -123,6 +124,8 @@ function App() {
             )
           }
         />
+
+        <Route path="/about" element={<About />} />
 
         <Route
           path="/"
