@@ -57,7 +57,7 @@ const RenderTree = ({ id, respondee, setParent, setShow, setWhich }) => {
     <div>
       <br></br>
       {comment && (
-        <div>
+        <div style={{fontFamily:"Times New Roman"}}>
           <div
             style={{
               display: "flex",
@@ -159,7 +159,7 @@ const PostDetail = () => {
       {!show && <Header name = "Post Details"/>}
 
       {post && (
-        <div className={classes.post}>
+        <div className={classes.post} style={{fontFamily:"Times New Roman"}}>
           <div
             style={{
               display: "flex",
