@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { auth, storage } from "../../firebase";
+import React, { useState, useEffect } from "react";
+import { auth, db, storage } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { collection, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 import Header from "./Header";
 import { IconUserCircle, IconEdit } from "@tabler/icons-react";
@@ -8,6 +9,63 @@ import Modal from "../posts/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 import Button from "react-bootstrap/Button";
 import classes from "./Profile.module.css";
+
+const GeneralEdit = ({ id, which, onClose }) => {
+  const [answer, setAnswer] = useState("");
+
+
+  const onChange = (e) => {
+    setAnswer(e.target.value);
+  };
+
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (which === "displayName") {
+      updateProfile(auth.currentUser, {
+        displayName: answer,
+      }).then(() => {
+        window.location.reload();
+      });
+    } else if (which === "motto") {
+      const userRef = doc(db, "users", id);
+      updateDoc(userRef, {
+        motto: answer,
+      }).then(() => {
+        window.location.reload();
+      });
+    }
+  };
+
+
+  return (
+    <div>
+      <p>{which}</p>
+      <CloseButton onClick={onClose} style={{ fontSize: "large" }} />
+      <br></br>
+      <div className={classes.or}></div>
+      <form className={classes.form}>
+        <input
+
+          class="form-control"
+          type="text"
+          id="formFile"
+          style={{ width: "60%", margin: "auto", display: "block" }}
+          onChange={onChange}
+        ></input>
+        <br></br>
+        <br></br>
+        <Button
+          onClick={onSubmit}
+          style={{ width: "60%", margin: "auto", display: "block" }}
+        >
+          Submit
+        </Button>
+      </form>
+
+    </div>
+  );
+};
 
 const ChangeImage = ({ onClose }) => {
   const [image, setImage] = useState(null);
@@ -19,7 +77,6 @@ const ChangeImage = ({ onClose }) => {
 
     if (file && allowedTypes.includes(file.type) && file.size <= maxSize) {
       setImage(file);
-      console.log("suceess ");
     } else {
       setImage(null);
       alert("Please select a PNG or JPEG file that is less than 2MB in size.");
@@ -51,13 +108,33 @@ const ChangeImage = ({ onClose }) => {
       <br></br>
       <div className={classes.or}></div>
       <form className={classes.form}>
-        <IconUserCircle
-          size={400}
-          stroke-width={0.75}
-          role="img"
-          color="#f29263"
-          style={{ margin: "auto", display: "block" }}
-        />
+        {image ? (
+          <div>
+            <br></br>
+            <br></br>
+            <img
+              src={URL.createObjectURL(image)}
+              alt="profile"
+              style={{
+                width: "350px",
+                height: "350px",
+                borderRadius: "175px",
+                margin: "auto",
+                display: "block",
+              }}
+            />
+            <br></br>
+            <br></br>
+          </div>
+        ) : (
+          <IconUserCircle
+            size={400}
+            stroke-width={0.75}
+            role="img"
+            color="#f29263"
+            style={{ margin: "auto", display: "block" }}
+          />
+        )}
 
         <br></br>
 
@@ -85,6 +162,17 @@ const ChangeImage = ({ onClose }) => {
 const Profile = () => {
   const [show, setShow] = useState(true);
   const [showEditImage, setShowEditImage] = useState(false);
+  const [which, setWhich] = useState("");
+  const [showEditGeneral, setShowEditGeneral] = useState(false);
+
+  const [formData, setFormData] = useState({
+    displayName: "A Mysterious User",
+    motto: "Life is a mystery, and so am I.",
+    year: "Um... Unknown Year",
+    major: "Um... Unknown Major",
+    gender: "Please Specify",
+    region: "Please Specify",
+  });
 
   const onClickImageHandler = () => {
     setShow(false);
@@ -93,14 +181,48 @@ const Profile = () => {
 
   const hideModal = () => {
     setShowEditImage(false);
+    setShowEditGeneral(false);
     setShow(true);
   };
+
+  const onClickGeneralHandler = ({ state }) => {
+    setShow(false);
+    setWhich(state);
+    setShowEditGeneral(true);
+  };
+  useEffect(() => {
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      const q = query(
+        collection(db, "users"),
+        where("uid", "==", currentUser.uid)
+      );
+      const getData = async () => {
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        const adjustedData = {
+          ...data[0],
+          displayName: currentUser.displayName,
+        };
+        await setFormData(adjustedData);
+      };
+      getData();
+    }
+  }, []);
 
   return (
     <>
       {showEditImage && (
         <Modal>
           <ChangeImage onClose={hideModal} />
+        </Modal>
+      )}
+      {showEditGeneral && (
+        <Modal>
+          <GeneralEdit which={which} onClose={hideModal} id={formData.id} />
         </Modal>
       )}
       {show && <Header name="Profile" />}
@@ -273,8 +395,8 @@ const Profile = () => {
                           class="f-w-600"
                           style={{ marginTop: "30px", fontSize: "x-large" }}
                         >
-                          {auth.currentUser.displayName != null
-                            ? auth.currentUser.displayName
+                          {formData.displayName != null
+                            ? formData.displayName
                             : "A Mysterious User"}
                         </h6>
                         <IconEdit
@@ -291,10 +413,15 @@ const Profile = () => {
                             marginBottom: "5px",
                           }}
                         >
-                          afqiowefno qwefioqwfn sadfioqwjef asdifqwjoen
-                          caioewjfqwoifjwqofiwo
+                          {formData.motto}
                         </p>
-                        <IconEdit size={20} role="button" />
+                        <IconEdit
+                          size={20}
+                          role="button"
+                          onClick={() =>
+                            onClickGeneralHandler({ state: "motto" })
+                          }
+                        />
                       </div>
                       <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                     </div>
@@ -361,7 +488,7 @@ const Profile = () => {
                             class="text-muted f-w-400"
                             style={{ fontSize: "medium" }}
                           >
-                            Not Known
+                            {formData.year}
                           </h6>
                         </div>
                         <div class="col-sm-6">
@@ -384,7 +511,7 @@ const Profile = () => {
                             class="text-muted f-w-400"
                             style={{ fontSize: "medium" }}
                           >
-                            Not Known
+                            {formData.major}
                           </h6>
                         </div>
                       </div>
@@ -416,7 +543,7 @@ const Profile = () => {
                             class="text-muted f-w-400"
                             style={{ fontSize: "large" }}
                           >
-                            Male
+                            {formData.gender}
                           </h6>
                         </div>
                         <div class="col-sm-6">
@@ -439,7 +566,7 @@ const Profile = () => {
                             class="text-muted f-w-400"
                             style={{ fontSize: "large" }}
                           >
-                            USA
+                            {formData.region}
                           </h6>
                         </div>
                       </div>
