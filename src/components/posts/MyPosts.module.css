@@ -7,4 +7,5 @@
     gap: 1rem;
     grid-template-columns: repeat(3, 30%);
     justify-content: center;
+    font-family: 'Times New Roman', Times, serif;
 }

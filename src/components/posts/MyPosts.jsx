@@ -29,9 +29,20 @@ const MyPosts = () => {
 
   return (
     <div>
-      <Header name = "My Posts"/>
-      <h1>My Posts</h1>
-
+      <Header name="My Posts" />
+      <div
+        style={{
+          alignItems: "center",
+          margin: "auto",
+          justifyContent: "center",
+          padding: "5px",
+          display: "block",
+          textAlign: "center",
+          fontFamily: "Times New Roman",  
+        }}
+      >
+        <h1>Your Past Posts</h1>
+      </div>
       <div className={classes.posts}>
         {posts.map((post) => (
           <div key={post.time}>
