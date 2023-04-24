@@ -26,7 +26,7 @@ const Header = ({ name }) => {
   };
 
   return (
-    <Navbar bg="light" expand="lg" sticky="top">
+    <Navbar bg="light" expand="lg" sticky="top" style={{fontFamily:"Times New Roman"}}>
       <Container fluid>
         <Navbar.Brand>{name}</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
@@ -41,11 +41,11 @@ const Header = ({ name }) => {
             <Nav.Link href="#messages">Messages</Nav.Link>
             <NavDropdown title="Me" id="navbarScrollingDropdown">
               <NavDropdown.Item href="/myposts">My Posts</NavDropdown.Item>
-              <NavDropdown.Item href="#action3">Involved In...</NavDropdown.Item>
+              <NavDropdown.Item href="/myinvolvement">Involved In...</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="#about">About</Nav.Link>
+            <Nav.Link href="/about">About</Nav.Link>
             <Nav.Link href="/signout">Logout</Nav.Link>
           </Nav>
           <Form style={{ display: "flex", alignItems: "center" }}>
