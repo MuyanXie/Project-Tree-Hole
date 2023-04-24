@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { auth, db, storage } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { collection, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 import Header from "./Header";
 import { IconUserCircle, IconEdit } from "@tabler/icons-react";
@@ -9,15 +16,15 @@ import Modal from "../posts/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 import Button from "react-bootstrap/Button";
 import classes from "./Profile.module.css";
+import Form from "react-bootstrap/Form";
+import SmallModal from "../utils/SmallModal";
 
 const GeneralEdit = ({ id, which, onClose }) => {
   const [answer, setAnswer] = useState("");
 
-
   const onChange = (e) => {
     setAnswer(e.target.value);
   };
-
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -27,42 +34,51 @@ const GeneralEdit = ({ id, which, onClose }) => {
       }).then(() => {
         window.location.reload();
       });
-    } else if (which === "motto") {
+    } else {
       const userRef = doc(db, "users", id);
       updateDoc(userRef, {
-        motto: answer,
+        [which]: answer,
       }).then(() => {
         window.location.reload();
       });
     }
   };
 
-
   return (
     <div>
-      <p>{which}</p>
-      <CloseButton onClick={onClose} style={{ fontSize: "large" }} />
-      <br></br>
-      <div className={classes.or}></div>
-      <form className={classes.form}>
-        <input
 
-          class="form-control"
-          type="text"
-          id="formFile"
-          style={{ width: "60%", margin: "auto", display: "block" }}
-          onChange={onChange}
-        ></input>
-        <br></br>
-        <br></br>
-        <Button
-          onClick={onSubmit}
-          style={{ width: "60%", margin: "auto", display: "block" }}
-        >
-          Submit
-        </Button>
-      </form>
-
+      <Form>
+        <Form.Group className="mb-3">
+          <CloseButton onClick={onClose} />
+          <br></br>
+          <div className={classes.or}></div>
+          <br></br>
+          <Form.Label className="form-label" style={{ fontSize: "15px" }}>
+            Enter your Comment...
+          </Form.Label>
+          <div class="input-group">
+            <textarea
+              class="form-control"
+              aria-label="With textarea"
+              onChange={onChange}
+              id="floatingInput"
+              name="answer"
+              value={answer}
+              style={{ resize: "none" }}
+              rows="3"
+            ></textarea>
+          </div>
+          <br></br>
+          <Form.Text className="text-muted">
+            What do you want it to be?
+          </Form.Text>
+          <br></br>
+          <br></br>
+          <Button variant="primary" type="submit" onClick={onSubmit}>
+            Submit
+          </Button>
+        </Form.Group>
+      </Form>
     </div>
   );
 };
@@ -221,9 +237,9 @@ const Profile = () => {
         </Modal>
       )}
       {showEditGeneral && (
-        <Modal>
+        <SmallModal>
           <GeneralEdit which={which} onClose={hideModal} id={formData.id} />
-        </Modal>
+        </SmallModal>
       )}
       {show && <Header name="Profile" />}
       <div class="page-content page-container" id="page-content">
@@ -387,7 +403,7 @@ const Profile = () => {
                       <div
                         style={{
                           display: "flex",
-                          justifyContent: "space-between",
+                          justifyContent: "center",
                           alignItems: "center",
                         }}
                       >
@@ -403,6 +419,9 @@ const Profile = () => {
                           size={20}
                           role="button"
                           style={{ marginTop: "25px" }}
+                          onClick={() =>
+                            onClickGeneralHandler({ state: "displayName" })
+                          }
                         />
                       </div>
                       <div>
@@ -482,7 +501,13 @@ const Profile = () => {
                             >
                               Year
                             </p>
-                            <IconEdit size={20} role="button" />
+                            <IconEdit
+                              size={20}
+                              role="button"
+                              onClick={() =>
+                                onClickGeneralHandler({ state: "year" })
+                              }
+                            />
                           </div>
                           <h6
                             class="text-muted f-w-400"
@@ -505,7 +530,13 @@ const Profile = () => {
                             >
                               Major
                             </p>
-                            <IconEdit size={20} role="button" />
+                            <IconEdit
+                              size={20}
+                              role="button"
+                              onClick={() =>
+                                onClickGeneralHandler({ state: "major" })
+                              }
+                            />
                           </div>
                           <h6
                             class="text-muted f-w-400"
@@ -537,7 +568,13 @@ const Profile = () => {
                             >
                               Gender
                             </p>
-                            <IconEdit size={20} role="button" />
+                            <IconEdit
+                              size={20}
+                              role="button"
+                              onClick={() =>
+                                onClickGeneralHandler({ state: "gender" })
+                              }
+                            />
                           </div>
                           <h6
                             class="text-muted f-w-400"
@@ -560,7 +597,13 @@ const Profile = () => {
                             >
                               Region
                             </p>
-                            <IconEdit size={20} role="button" />
+                            <IconEdit
+                              size={20}
+                              role="button"
+                              onClick={() =>
+                                onClickGeneralHandler({ state: "region" })
+                              }
+                            />
                           </div>
                           <h6
                             class="text-muted f-w-400"
