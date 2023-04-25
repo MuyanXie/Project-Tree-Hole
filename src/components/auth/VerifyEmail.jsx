@@ -1,8 +1,10 @@
 import { getAuth, sendEmailVerification } from "firebase/auth";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const VerifyEmail = () => {
   const auth = getAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timerId = setInterval(() => {
@@ -12,12 +14,12 @@ const VerifyEmail = () => {
           if (auth.currentUser.emailVerified) {
             const token = await auth.currentUser.getIdToken();
             localStorage.setItem("token", token);
-            window.location.reload();
+            navigate("/signout");
           }
         });
     }, 2000);
     return () => clearInterval(timerId);
-  }, [auth]);
+  }, [auth, navigate]);
 
   useEffect(() => {
     if (!auth.currentUser.emailVerified) {

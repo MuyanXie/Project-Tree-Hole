@@ -4,7 +4,7 @@
 
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import React, { useState } from "react";
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import logo from "../../static/pics/University_of_Chicago-Logo.wine.png";
@@ -43,7 +43,7 @@ const SignUp = () => {
       createUserWithEmailAndPassword(auth, formData.email, formData.password)
         .then(() => {
           updateProfile(auth.currentUser, {
-            displayName: "User " + uuid().slice(0, 5)
+            displayName: "User " + uuid().slice(0, 5),
           });
           navigate("/verifyemail");
         })

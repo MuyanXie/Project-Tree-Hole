@@ -7,6 +7,7 @@ import {
   where,
   getDocs,
   doc,
+  addDoc,
   updateDoc,
 } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
@@ -54,7 +55,7 @@ const GeneralEdit = ({ id, which, onClose }) => {
           <div className={classes.or}></div>
           <br></br>
           <Form.Label className="form-label" style={{ fontSize: "15px" }}>
-            Enter your Comment...
+            Edit it to ... ?
           </Form.Label>
           <div class="input-group">
             <textarea
@@ -223,7 +224,31 @@ const Profile = () => {
           ...data[0],
           displayName: currentUser.displayName,
         };
-        await setFormData(adjustedData);
+        if(data[0]){
+          await setFormData(adjustedData);
+        }
+        else
+        {
+          await addDoc(collection(db, "users"), {
+            uid: currentUser.uid,
+            motto: "Life is a mystery, and so am I.",
+            year: "Um... Unknown Year",
+            major: "Um... Unknown Major",
+            gender: "Please Specify",
+            region: "Please Specify",
+          }).then((docRef) => {
+            setFormData({
+              motto: "Life is a mystery, and so am I.",
+              year: "Um... Unknown Year",
+              major: "Um... Unknown Major",
+              gender: "Please Specify",
+              region: "Please Specify",
+              uid: currentUser.uid,
+              id: docRef.id,
+              displayName: currentUser.displayName,
+            });
+          });
+        } 
       };
       getData();
     }

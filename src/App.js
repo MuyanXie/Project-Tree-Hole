@@ -17,6 +17,7 @@ import PostDetail from "./components/posts/PostDetail";
 import Searchresultpage from "./components/utils/Searchresultpage";
 import Profile from "./components/display/Profile";
 import About from "./components/display/About";
+import Dialog from "./components/message/Dialog"
 import { auth } from "./firebase";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -143,6 +144,21 @@ function App() {
         />
 
         <Route path="*" element={<Navigate to="/" />} />
+
+        <Route
+          path="/dialog"
+          element={
+            user ? (
+              user.emailVerified ? (
+                <Dialog />
+              ) : (
+                <Navigate to="/verifyemail" />
+              )
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
 
         <Route
           path="/postdetail"
