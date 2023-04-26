@@ -11,6 +11,8 @@ import {
   doc,
 } from "firebase/firestore";
 import { useLocation } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import Header from "../display/Header";
 
 const Dialog = () => {
   const [messagesList, setMessagesList] = useState([]);
@@ -18,7 +20,7 @@ const Dialog = () => {
   const [errors, setErrors] = useState({});
   const messagesContainerRef = useRef(null);
 
-  const {state} = useLocation();
+  const { state } = useLocation();
   const chatId = state.id;
   const sender = state.sender;
 
@@ -59,7 +61,7 @@ const Dialog = () => {
         sender: auth.currentUser.uid,
         date: new Date(),
       });
-      if(auth.currentUser.uid === sender) {
+      if (auth.currentUser.uid === sender) {
         updateDoc(doc(db, "messages", chatId), {
           recipientUnread: true,
         });
@@ -102,25 +104,53 @@ const Dialog = () => {
 
   return (
     <div>
+      <Header name={"Chat"} />
       <div
         ref={messagesContainerRef}
         style={{
-          height: "75%",
+          height: "65%",
           width: "50%",
           left: "50%",
-          top: "10%",
+          top: "15%",
           transform: "translate(-50%, 0)",
           border: "1px solid black",
           overflowY: "scroll",
           padding: "10px",
           position: "absolute",
+          backgroundColor: "white",
+          borderRadius: "10px",
+          fontFamily: "Times New Roman",
+          fontSize: "20px",
         }}
         onScroll={onScroll}
       >
         {messagesList.map((message) => (
           <div key={message.sender}>
-            <p>{message.text}</p>
-            <p>{message.sender}</p>
+            <div
+              style={{
+                display: "block",
+                marginBottom: "10px",
+                width: "100%",
+              }}
+            >
+              <p
+                style={{
+                  margin: "0px",
+                  left: message.sender === auth.currentUser.uid ? "95%" : "0%", 
+                  position: "sticky",
+                  justifyItems: "right",
+                  backgroundColor:
+                    message.sender === auth.currentUser.uid
+                      ? "#DFFF00"
+                      : "#e6e6e6",
+                  width: "fit-content",
+                  borderRadius: "10px",
+                  padding: "10px",
+                }}
+              >
+                {message.text}
+              </p>
+            </div>
           </div>
         ))}
       </div>
@@ -128,9 +158,13 @@ const Dialog = () => {
         style={{
           width: "50%",
           left: "50%",
-          top: "90%",
+          top: "85%",
           transform: "translate(-50%, 0)",
           position: "absolute",
+          height: "8%",
+          display: "flex",
+          justifyContent: "space-between",
+          fontFamily: "Times New Roman",
         }}
       >
         <input
@@ -138,10 +172,31 @@ const Dialog = () => {
           name="message"
           value={message}
           onChange={onChange}
-          style={{ width: "80%" }}
-          placeholder="Type your message here..."
+          style={{
+            width: "80%",
+            height: "100%",
+            padding: "0px",
+            borderTopLeftRadius: "5px",
+            borderBottomLeftRadius: "5px",
+            borderTopRightRadius: "0px",
+            borderBottomRightRadius: "0px",
+            fontFamily: "Times New Roman",
+          }}
+          placeholder="  Type your message here..."
         />
-        <button onClick={onClick}>Send</button>
+        <Button
+          onClick={onClick}
+          style={{
+            width: "20%",
+            height: "100%",
+            borderTopLeftRadius: "0px",
+            borderBottomLeftRadius: "0px",
+            padding: "0px",
+            fontFamily: "Times New Roman",
+          }}
+        >
+          Send
+        </Button>
       </div>
       {errors.message && <p>{errors.message}</p>}
     </div>
