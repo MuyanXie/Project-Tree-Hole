@@ -20,6 +20,8 @@ import About from "./components/display/About";
 import Dialog from "./components/message/Dialog";
 import ChatList from "./components/message/ChatList";
 import AddNewPost from "./components/display/AddNewPost";
+import FeedPosts from "./components/display/FeedPosts";
+import Involvement from "./components/display/Involvement";
 import { auth } from "./firebase";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -86,6 +88,21 @@ function App() {
         />
 
         <Route
+          path="/myinvolvement"
+          element={
+            user ? (
+              user.emailVerified ? (
+                <Involvement />
+              ) : (
+                <Navigate to="/verifyemail" />
+              )
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
+
+        <Route
           path="/verifyemail"
           element={
             !user ? (
@@ -97,6 +114,21 @@ function App() {
             )
           }
         />
+
+        <Route
+          path="/feedposts"
+          element={
+            user ? (
+              user.emailVerified ? (
+                <FeedPosts />
+              ) : (
+                <Navigate to="/verifyemail" />
+              )
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />ƒ
 
         <Route
           path="/searchresultpage"
