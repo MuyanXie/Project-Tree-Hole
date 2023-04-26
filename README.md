@@ -32,3 +32,5 @@ export const storage = getStorage(app);
 ```
 
 Then running `npm start` will start the project on your local machine. (You may need to run `npm install` first.)
+
+![Alt Text](public/giphy.gif)
