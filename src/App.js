@@ -19,6 +19,7 @@ import Profile from "./components/display/Profile";
 import About from "./components/display/About";
 import Dialog from "./components/message/Dialog";
 import ChatList from "./components/message/ChatList";
+import AddNewPost from "./components/display/AddNewPost";
 import { auth } from "./firebase";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -103,6 +104,21 @@ function App() {
             user ? (
               user.emailVerified ? (
                 <Searchresultpage />
+              ) : (
+                <Navigate to="/verifyemail" />
+              )
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
+
+        <Route
+          path="/addnewpost"
+          element={
+            user ? (
+              user.emailVerified ? (
+                <AddNewPost />
               ) : (
                 <Navigate to="/verifyemail" />
               )
