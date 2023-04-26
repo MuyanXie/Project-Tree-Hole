@@ -53,7 +53,7 @@ const ChatList = () => {
 
   return (
     <div>
-      <Header />
+      <Header name={"Chatlist"}/>
       {ChatList.map((chat) => (
         <div key={chat.id}>
           <p>{chat.id}</p>
