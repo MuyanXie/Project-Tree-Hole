@@ -160,7 +160,7 @@ function App() {
           }
         />
 
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="*" element={<Navigate to="/about" />} />
 
         <Route
           path="/dialog"
