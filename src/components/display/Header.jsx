@@ -26,7 +26,7 @@ const Header = ({ name }) => {
   };
 
   return (
-    <Navbar bg="light" expand="lg" sticky="top" style={{fontFamily:"Times New Roman"}}>
+    <Navbar bg="light" expand="lg" sticky="top" style={{fontFamily:"sans-serif"}}>
       <Container fluid>
         <Navbar.Brand>{name}</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />

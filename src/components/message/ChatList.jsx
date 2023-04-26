@@ -10,6 +10,7 @@ import {
   doc,
 } from "firebase/firestore";
 import Header from "../display/Header";
+import { Button } from "react-bootstrap";
 
 const ChatList = () => {
   const [ChatList, setChatList] = useState([]);
@@ -51,14 +52,62 @@ const ChatList = () => {
     });
   };
 
+  // #FFDD3C yellow -> for unread messages
+  // #e6e6e6 grey -> for read messages
+
   return (
     <div>
       <Header name={"Chatlist"}/>
+      <h1
+        style={{
+          textAlign: "center",
+          marginTop: "20px",
+          marginBottom: "20px",
+          fontFamily: "sans-serif",
+        }}
+      >Your Chats</h1>
       {ChatList.map((chat) => (
         <div key={chat.id}>
-          <p>{chat.id}</p>
-          <p>{chat.sender}</p>
-          <button
+          <div
+            style={{
+              background: chat.sender === auth.currentUser.uid ? (
+                chat.senderUnread ? (
+                  "#FFDD3C"
+                ) : (
+                  "#e6e6e6"
+                )
+              ):(
+                chat.recipientUnread ? (
+                  "#FFDD3C"
+                ) : (
+                  "#e6e6e6"
+                )
+              ),
+              padding: "10px",
+              borderRadius: "20px",
+              width: "50%",
+              margin: "auto",
+              justifyItems: "space-between",
+              display: "flex",
+              border: "0px",
+              marginBottom: "15px",
+            }}
+          >
+          <h5
+            style={{
+              margin: "auto",
+              padding: "10px",
+              color: "black",
+            }}
+          >Chat with {
+            auth.currentUser.uid === chat.sender ? (
+              chat.recipientName
+            ):(
+              chat.senderName
+            )
+            }</h5>
+          <Button
+            variant="light"
             onClick={() =>
               onClick({
                 chat:chat
@@ -66,7 +115,8 @@ const ChatList = () => {
             }
           >
             Open
-          </button>
+          </Button>
+          </div>
         </div>
       ))}
     </div>

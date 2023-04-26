@@ -96,7 +96,7 @@ const Dialog = () => {
       <Header name={"Chat"} />
       <h1
         style={{
-          fontFamily: "Times New Roman",
+          fontFamily: "sans-serif",
           top: "15%",
           color: "grey",
           display: "flex",
@@ -119,7 +119,7 @@ const Dialog = () => {
           position: "absolute",
           backgroundColor: "white",
           borderRadius: "10px",
-          fontFamily: "Times New Roman",
+          fontFamily: "sans-serif",
           fontSize: "20px",
         }}
       >
@@ -163,7 +163,7 @@ const Dialog = () => {
           height: "8%",
           display: "flex",
           justifyContent: "space-between",
-          fontFamily: "Times New Roman",
+          fontFamily: "sans-serif",
         }}
       >
         <input
@@ -180,7 +180,7 @@ const Dialog = () => {
             borderTopRightRadius: "0px",
             borderBottomRightRadius: "0px",
             border: "0px",
-            fontFamily: "Times New Roman",
+            fontFamily: "sans-serif",
           }}
           placeholder="Type your message here..."
         />
@@ -192,7 +192,7 @@ const Dialog = () => {
             borderTopLeftRadius: "0px",
             borderBottomLeftRadius: "0px",
             padding: "0px",
-            fontFamily: "Times New Roman",
+            fontFamily: "sans-serif",
           }}
         >
           Send

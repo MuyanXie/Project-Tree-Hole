@@ -62,7 +62,7 @@ const VerifyEmail = () => {
         >
           <h1
             style={{
-              fontFamily: "Times New Roman",
+              fontFamily: "sans-serif",
               textAlign: "center",
             }}
           >
@@ -71,7 +71,7 @@ const VerifyEmail = () => {
           <h5
             style={{
               alignItems: "center",
-              fontFamily: "Times New Roman",
+              fontFamily: "sans-serif",
               textAlign: "center",
             }}
           >
@@ -96,7 +96,7 @@ const VerifyEmail = () => {
             style={{
               textAlign: "center",
               alignItems: "center",
-              fontFamily: "Times New Roman",
+              fontFamily: "sans-serif",
               fontSize: "xxx-large",
             }}
           >
@@ -116,7 +116,7 @@ const VerifyEmail = () => {
                 textAlign: "center",
                 alignItems: "center",
                 fontSize: "xx-large",
-                fontFamily: "Times New Roman",
+                fontFamily: "sans-serif",
               }}
             >
               Resend Email

@@ -38,7 +38,7 @@ const MyPosts = () => {
           padding: "5px",
           display: "block",
           textAlign: "center",
-          fontFamily: "Times New Roman",  
+          fontFamily: "sans-serif",  
         }}
       >
         <h1>Your Past Posts</h1>

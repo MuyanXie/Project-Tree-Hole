@@ -27,14 +27,14 @@ const About = () => {
           }}
           className={classes.block}
         >
-          <h1 style={{ fontSize: "xxx-large", fontFamily: "Times New Roman" }}>
+          <h1 style={{ fontSize: "xxx-large", fontFamily: "sans-serif" }}>
             University of Chicago Tree Hole
           </h1>
-          <h5 style={{ alignItems: "center", fontSize: "xx-large", fontFamily: "Times New Roman" }}>
+          <h5 style={{ alignItems: "center", fontSize: "xx-large", fontFamily: "sans-serif" }}>
             Honorly built by the UChicago Tree Hole Team
           </h5>
           <br></br>
-          <h5 style={{ alignItems: "center", fontSize: "xx-large", fontFamily: "Times New Roman"
+          <h5 style={{ alignItems: "center", fontSize: "xx-large", fontFamily: "sans-serif"
         }}>
             "We are here to listen and to find the way out"
           </h5>
