@@ -4,7 +4,7 @@
     position: relative;
     background-color: #ffffff;
     padding: 1rem;
-    width: 20rem;
+    width: 30rem;
     margin: 5rem auto;
     border-radius: 6px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -31,6 +31,7 @@
     font-size: medium;
     font-family: "Lucida Handwriting", cursive;
     text-align: center;
+    width: 80%;
     margin: auto;
     display: grid;
     justify-content: center;

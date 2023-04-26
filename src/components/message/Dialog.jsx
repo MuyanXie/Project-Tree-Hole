@@ -23,6 +23,10 @@ const Dialog = () => {
   const { state } = useLocation();
   const chatId = state.id;
   const sender = state.sender;
+  const recipientName = state.recipientName;
+  const senderName = state.senderName;
+
+  const chatter = auth.currentUser.uid === sender ? recipientName : senderName;
 
   useEffect(() => {
     // Get initial messages from database
@@ -70,27 +74,12 @@ const Dialog = () => {
           senderUnread: true,
         });
       }
-
+      updateDoc(doc(db, "messages", chatId), {
+        last: new Date(),
+      });
       setMessage("");
     }
     setErrors(formErrors);
-  };
-
-  const fetchMoreMessages = async () => {
-    const q = query(
-      collection(db, `messages/${chatId}/chat`),
-      orderBy("date", "desc").startAfter(messagesList[0].date).limit(10)
-    );
-    const querySnapshot = await q.get();
-    const data = querySnapshot.docs.map((doc) => doc.data());
-    setMessagesList((prevState) => [...data, ...prevState]);
-  };
-
-  const onScroll = () => {
-    const element = messagesContainerRef.current;
-    if (element.scrollTop === 0) {
-      fetchMoreMessages();
-    }
   };
 
   useLayoutEffect(() => {
@@ -105,6 +94,17 @@ const Dialog = () => {
   return (
     <div>
       <Header name={"Chat"} />
+      <h1
+        style={{
+          fontFamily: "Times New Roman",
+          top: "15%",
+          color: "grey",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        Your Chat with {chatter}
+      </h1>
       <div
         ref={messagesContainerRef}
         style={{
@@ -122,10 +122,9 @@ const Dialog = () => {
           fontFamily: "Times New Roman",
           fontSize: "20px",
         }}
-        onScroll={onScroll}
       >
         {messagesList.map((message) => (
-          <div key={message.sender}>
+          <div key={message.date}>
             <div
               style={{
                 display: "block",
@@ -136,7 +135,7 @@ const Dialog = () => {
               <p
                 style={{
                   margin: "0px",
-                  left: message.sender === auth.currentUser.uid ? "95%" : "0%", 
+                  left: message.sender === auth.currentUser.uid ? "95%" : "0%",
                   position: "sticky",
                   justifyItems: "right",
                   backgroundColor:
@@ -175,14 +174,15 @@ const Dialog = () => {
           style={{
             width: "80%",
             height: "100%",
-            padding: "0px",
+            paddingLeft: "10px",
             borderTopLeftRadius: "5px",
             borderBottomLeftRadius: "5px",
             borderTopRightRadius: "0px",
             borderBottomRightRadius: "0px",
+            border: "0px",
             fontFamily: "Times New Roman",
           }}
-          placeholder="  Type your message here..."
+          placeholder="Type your message here..."
         />
         <Button
           onClick={onClick}

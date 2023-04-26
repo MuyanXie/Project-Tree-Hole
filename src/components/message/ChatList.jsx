@@ -47,7 +47,7 @@ const ChatList = () => {
       });
     }
     navigate("/dialog", {
-      state: { id: chat.id, sender: chat.sender},
+      state: { id: chat.id, sender: chat.sender, recipientName: chat.recipientName, senderName: chat.senderName},
     });
   };
 

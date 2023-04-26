@@ -4,8 +4,8 @@
 
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import React, { useState } from "react";
-import { v4 as uuid } from "uuid";
 import { auth } from "../../firebase";
+import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
 import logo from "../../static/pics/University_of_Chicago-Logo.wine.png";
 import classes from "./Signup.module.css";
@@ -15,6 +15,7 @@ const SignUp = () => {
     email: "",
     password: "",
     passwordConfirm: "",
+    displayName: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -39,11 +40,14 @@ const SignUp = () => {
     if (formData.password !== formData.passwordConfirm) {
       formErrors.passwordConfirm = "Passwords do not match";
     }
+    if (formData.displayName.length < 6) {
+      formErrors.displayName = "Display Name is required to be at least 6 characters long";
+    }
     if (Object.keys(formErrors).length === 0) {
       createUserWithEmailAndPassword(auth, formData.email, formData.password)
         .then(() => {
           updateProfile(auth.currentUser, {
-            displayName: "User " + uuid().slice(0, 5),
+            displayName: formData.displayName + uuid().slice(0, 4),
           });
           navigate("/verifyemail");
         })
@@ -71,8 +75,9 @@ const SignUp = () => {
         ></img>
 
         <br></br>
-        <br></br>
 
+        <label className={classes.label}>Basic Info</label>
+          <br></br>
         <input
           type="email"
           placeholder="Enter Your Email"
@@ -103,6 +108,21 @@ const SignUp = () => {
         ></input>
         {errors.passwordConfirm && (
           <p className={classes.error}>{errors.passwordConfirm}</p>
+        )}
+
+        <br></br>
+
+        <label className={classes.label}>Display Name</label>
+        <br></br>
+        <input
+          type="text"
+          placeholder="Will include unique appendix"
+          name="displayName"
+          onChange={handleChange}
+          className={classes.input}
+        ></input>
+        {errors.displayName && (
+          <p className={classes.error}>{errors.displayName}</p>
         )}
 
         <br />

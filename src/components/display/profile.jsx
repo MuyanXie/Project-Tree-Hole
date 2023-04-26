@@ -29,25 +29,16 @@ const GeneralEdit = ({ id, which, onClose }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (which === "displayName") {
-      updateProfile(auth.currentUser, {
-        displayName: answer,
-      }).then(() => {
-        window.location.reload();
-      });
-    } else {
-      const userRef = doc(db, "users", id);
-      updateDoc(userRef, {
-        [which]: answer,
-      }).then(() => {
-        window.location.reload();
-      });
-    }
+    const userRef = doc(db, "users", id);
+    updateDoc(userRef, {
+      [which]: answer,
+    }).then(() => {
+      window.location.reload();
+    });
   };
 
   return (
     <div>
-
       <Form>
         <Form.Group className="mb-3">
           <CloseButton onClick={onClose} />
@@ -224,11 +215,9 @@ const Profile = () => {
           ...data[0],
           displayName: currentUser.displayName,
         };
-        if(data[0]){
+        if (data[0]) {
           await setFormData(adjustedData);
-        }
-        else
-        {
+        } else {
           await addDoc(collection(db, "users"), {
             uid: currentUser.uid,
             motto: "Life is a mystery, and so am I.",
@@ -248,7 +237,7 @@ const Profile = () => {
               displayName: currentUser.displayName,
             });
           });
-        } 
+        }
       };
       getData();
     }
@@ -440,14 +429,6 @@ const Profile = () => {
                             ? formData.displayName
                             : "A Mysterious User"}
                         </h6>
-                        <IconEdit
-                          size={20}
-                          role="button"
-                          style={{ marginTop: "25px" }}
-                          onClick={() =>
-                            onClickGeneralHandler({ state: "displayName" })
-                          }
-                        />
                       </div>
                       <div>
                         <p

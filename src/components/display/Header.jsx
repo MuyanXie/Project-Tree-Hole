@@ -41,7 +41,7 @@ const Header = ({ name }) => {
             <Nav.Link href="/chatlist">Messages</Nav.Link>
             <NavDropdown title="Me" id="navbarScrollingDropdown">
               <NavDropdown.Item href="/myposts">My Posts</NavDropdown.Item>
-              <NavDropdown.Item href="#myinvolvement">Involved In...</NavDropdown.Item>
+              <NavDropdown.Item href="#myinvolvement">Commented On...</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
             </NavDropdown>
