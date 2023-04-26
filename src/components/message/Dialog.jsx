@@ -7,34 +7,51 @@ import {
   onSnapshot,
   addDoc,
   orderBy,
+  updateDoc,
+  doc,
 } from "firebase/firestore";
+import { useLocation } from "react-router-dom";
 
-const Dialog = ({}) => {
+const Dialog = () => {
   const [messagesList, setMessagesList] = useState([]);
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState({});
   const messagesContainerRef = useRef(null);
-  const chatId = "0VOwHw3fvtrc9ZmrusBv";
+
+  const {state} = useLocation();
+  const chatId = state.id;
+  const recipient = state.recipient;
+  const sender = state.sender;
+
   useEffect(() => {
     // Get initial messages from database
     const q = query(collection(db, `messages/${chatId}/chat`), orderBy("date"));
     const unsub = onSnapshot(q, (querySnapshot) => {
       const data = querySnapshot.docs.map((doc) => doc.data());
       setMessagesList(data);
+      if (auth.currentUser.uid === sender) {
+        updateDoc(doc(db, "messages", chatId), {
+          senderUnread: false,
+        });
+      } else {
+        updateDoc(doc(db, "messages", chatId), {
+          recipientUnread: false,
+        });
+      }
     });
     // Listen for new messages and update state
-    const messagesRef = collection(db, `messages/${chatId}/chat`);
-    const unsubscribe = onSnapshot(messagesRef, (snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        if (change.type === "added") {
-          const newMessage = change.doc.data();
-          setMessagesList((prevState) => [...prevState, newMessage]);
-        }
-      });
-    });
+    // const messagesRef = collection(db, `messages/${chatId}/chat`);
+    // const unsubscribe = onSnapshot(messagesRef, (snapshot) => {
+    //   snapshot.docChanges().forEach((change) => {
+    //     if (change.type === "added") {
+    //       const newMessage = change.doc.data();
+    //       setMessagesList((prevState) => [...prevState, newMessage]);
+    //     }
+    //   });
+    // });
     return () => {
       unsub();
-      unsubscribe();
+      // unsubscribe();
     };
   }, []);
   const onChange = (e) => {
@@ -52,6 +69,16 @@ const Dialog = ({}) => {
         sender: auth.currentUser.uid,
         date: new Date(),
       });
+      if(auth.currentUser.uid === sender) {
+        updateDoc(doc(db, "messages", chatId), {
+          recipientUnread: true,
+        });
+      } else {
+        updateDoc(doc(db, "messages", chatId), {
+          senderUnread: true,
+        });
+      }
+
       setMessage("");
     }
     setErrors(formErrors);
