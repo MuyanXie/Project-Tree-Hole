@@ -20,7 +20,6 @@ const Dialog = () => {
 
   const {state} = useLocation();
   const chatId = state.id;
-  const recipient = state.recipient;
   const sender = state.sender;
 
   useEffect(() => {
@@ -39,24 +38,15 @@ const Dialog = () => {
         });
       }
     });
-    // Listen for new messages and update state
-    // const messagesRef = collection(db, `messages/${chatId}/chat`);
-    // const unsubscribe = onSnapshot(messagesRef, (snapshot) => {
-    //   snapshot.docChanges().forEach((change) => {
-    //     if (change.type === "added") {
-    //       const newMessage = change.doc.data();
-    //       setMessagesList((prevState) => [...prevState, newMessage]);
-    //     }
-    //   });
-    // });
     return () => {
       unsub();
-      // unsubscribe();
     };
-  }, []);
+  }, [chatId, sender]);
+
   const onChange = (e) => {
     setMessage(e.target.value);
   };
+
   const onClick = (e) => {
     e.preventDefault();
     let formErrors = {};
@@ -83,6 +73,7 @@ const Dialog = () => {
     }
     setErrors(formErrors);
   };
+
   const fetchMoreMessages = async () => {
     const q = query(
       collection(db, `messages/${chatId}/chat`),
@@ -92,19 +83,23 @@ const Dialog = () => {
     const data = querySnapshot.docs.map((doc) => doc.data());
     setMessagesList((prevState) => [...data, ...prevState]);
   };
+
   const onScroll = () => {
     const element = messagesContainerRef.current;
     if (element.scrollTop === 0) {
       fetchMoreMessages();
     }
   };
+
   useLayoutEffect(() => {
     scrollToBottom();
   }, [messagesList]);
+
   const scrollToBottom = () => {
     const element = messagesContainerRef.current;
     element.scrollTop = element.scrollHeight - element.clientHeight;
   };
+
   return (
     <div>
       <div
@@ -148,6 +143,7 @@ const Dialog = () => {
         />
         <button onClick={onClick}>Send</button>
       </div>
+      {errors.message && <p>{errors.message}</p>}
     </div>
   );
 };

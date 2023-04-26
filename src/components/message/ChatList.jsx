@@ -30,7 +30,6 @@ const ChatList = () => {
         ...doc.data(),
       }));
       setChatList(data);
-      console.log(data);
     });
     return () => {
       unsub();
@@ -38,7 +37,6 @@ const ChatList = () => {
   }, []);
 
   const onClick = ({ chat }) => {
-    console.log(chat);
     if (auth.currentUser.uid === chat.sender) {
       updateDoc(doc(db, "messages", chat.id), {
         senderUnread: false,
@@ -49,7 +47,7 @@ const ChatList = () => {
       });
     }
     navigate("/dialog", {
-      state: { id: chat.id, sender: chat.sender, recipient: chat.recipient },
+      state: { id: chat.id, sender: chat.sender},
     });
   };
 
