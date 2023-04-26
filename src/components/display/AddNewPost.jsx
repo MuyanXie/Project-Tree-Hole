@@ -75,6 +75,8 @@ const AddNewPost = () => {
             ></textarea>
           </div>
         </Form.Group>
+        {errors.text && (
+            <p style={{ color: "red", textAlign: "center", fontSize: "20px" }}>{errors.text}</p>)}
         <Button variant="success" type="submit" onClick={onClick} 
         style={{
             fontSize: "20px",
