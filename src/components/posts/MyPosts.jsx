@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../../firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import PostCard from "./PostCard";
 import classes from "./MyPosts.module.css";
 import Header from "../display/Header";
@@ -13,7 +13,8 @@ const MyPosts = () => {
     if (currentUser) {
       const q = query(
         collection(db, "posts"),
-        where("uid", "==", currentUser.uid)
+        where("uid", "==", currentUser.uid),
+        orderBy("time", "desc")
       );
       const getData = async () => {
         const querySnapshot = await getDocs(q);

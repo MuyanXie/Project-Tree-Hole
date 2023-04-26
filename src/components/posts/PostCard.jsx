@@ -15,7 +15,7 @@ const PostCard = (post) => {
         <p className={classes.author}>From : {post.post.name}</p>
         <div className={classes.or}></div>
         <br></br>
-        <p className={classes.text}>{post.post.text}</p>
+        <div className={classes.text}>{post.post.text}</div>
         <br></br>  
         <div className={classes.or}></div>
         <br></br>
