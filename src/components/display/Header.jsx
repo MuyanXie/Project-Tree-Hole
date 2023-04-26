@@ -37,7 +37,7 @@ const Header = ({ name }) => {
             navbarScroll
           >
             <Nav.Link href="#feed">Feed</Nav.Link>
-            <Nav.Link href="#newpost">New...</Nav.Link>
+            <Nav.Link href="/addnewpost">New...</Nav.Link>
             <Nav.Link href="/chatlist">Messages</Nav.Link>
             <NavDropdown title="Me" id="navbarScrollingDropdown">
               <NavDropdown.Item href="/myposts">My Posts</NavDropdown.Item>
