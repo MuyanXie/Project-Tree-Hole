@@ -48,7 +48,12 @@ const ChatList = () => {
       });
     }
     navigate("/dialog", {
-      state: { id: chat.id, sender: chat.sender, recipientName: chat.recipientName, senderName: chat.senderName},
+      state: {
+        id: chat.id,
+        sender: chat.sender,
+        recipientName: chat.recipientName,
+        senderName: chat.senderName,
+      },
     });
   };
 
@@ -57,7 +62,7 @@ const ChatList = () => {
 
   return (
     <div>
-      <Header name={"Chatlist"}/>
+      <Header name={"Chatlist"} />
       <h1
         style={{
           textAlign: "center",
@@ -65,24 +70,21 @@ const ChatList = () => {
           marginBottom: "20px",
           fontFamily: "sans-serif",
         }}
-      >Your Chats</h1>
+      >
+        Your Chats
+      </h1>
       {ChatList.map((chat) => (
         <div key={chat.id}>
           <div
             style={{
-              background: chat.sender === auth.currentUser.uid ? (
-                chat.senderUnread ? (
-                  "#FFDD3C"
-                ) : (
-                  "#e6e6e6"
-                )
-              ):(
-                chat.recipientUnread ? (
-                  "#FFDD3C"
-                ) : (
-                  "#e6e6e6"
-                )
-              ),
+              background:
+                chat.sender === auth.currentUser.uid
+                  ? chat.senderUnread
+                    ? "#FFDD3C"
+                    : "#e6e6e6"
+                  : chat.recipientUnread
+                  ? "#FFDD3C"
+                  : "#e6e6e6",
               padding: "10px",
               borderRadius: "20px",
               width: "50%",
@@ -93,29 +95,44 @@ const ChatList = () => {
               marginBottom: "15px",
             }}
           >
-          <h5
-            style={{
-              margin: "auto",
-              padding: "10px",
-              color: "black",
-            }}
-          >Chat with {
-            auth.currentUser.uid === chat.sender ? (
-              chat.recipientName
-            ):(
-              chat.senderName
-            )
-            }</h5>
-          <Button
-            variant="light"
-            onClick={() =>
-              onClick({
-                chat:chat
-              })
-            }
-          >
-            Open
-          </Button>
+            <h5
+              style={{
+                padding: "10px",
+                color: "black",
+                margin: "auto",
+                marginLeft: "0px",
+              }}
+            >
+              {chat.last.toDate().toLocaleString("en-US", {
+                month: "numeric",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              })}
+            </h5>
+            <h4
+              style={{
+                padding: "10px",
+                color: "black",
+                margin: "auto",
+                marginLeft: "-10%",
+              }}
+            >
+              Chat with{" "}
+              {auth.currentUser.uid === chat.sender
+                ? chat.recipientName
+                : chat.senderName}
+            </h4>
+            <Button
+              variant="light"
+              onClick={() =>
+                onClick({
+                  chat: chat,
+                })
+              }
+            >
+              Open
+            </Button>
           </div>
         </div>
       ))}
