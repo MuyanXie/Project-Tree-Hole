@@ -38,7 +38,7 @@ const Header = ({ name }) => {
           >
             <Nav.Link href="#feed">Feed</Nav.Link>
             <Nav.Link href="#newpost">New...</Nav.Link>
-            <Nav.Link href="#messages">Messages</Nav.Link>
+            <Nav.Link href="/chatlist">Messages</Nav.Link>
             <NavDropdown title="Me" id="navbarScrollingDropdown">
               <NavDropdown.Item href="/myposts">My Posts</NavDropdown.Item>
               <NavDropdown.Item href="#myinvolvement">Involved In...</NavDropdown.Item>
