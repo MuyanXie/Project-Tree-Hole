@@ -36,12 +36,12 @@ const Header = ({ name }) => {
             style={{ maxHeight: "100px", fontSize:"large" }}
             navbarScroll
           >
-            <Nav.Link href="#feed">Feed</Nav.Link>
+            <Nav.Link href="/feedposts">Feed</Nav.Link>
             <Nav.Link href="/addnewpost">New...</Nav.Link>
             <Nav.Link href="/chatlist">Messages</Nav.Link>
             <NavDropdown title="Me" id="navbarScrollingDropdown">
               <NavDropdown.Item href="/myposts">My Posts</NavDropdown.Item>
-              <NavDropdown.Item href="#myinvolvement">Commented On...</NavDropdown.Item>
+              <NavDropdown.Item href="/myinvolvement">Commented On...</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
             </NavDropdown>
