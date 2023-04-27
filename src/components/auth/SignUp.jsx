@@ -37,6 +37,9 @@ const SignUp = () => {
     if (!formData.password) {
       formErrors.password = "Password is required";
     }
+    if(formData.email.endsWith("@uchicago.edu") === false){
+      formErrors.email = "Please use your UChicago email";
+    }
     if (formData.password !== formData.passwordConfirm) {
       formErrors.passwordConfirm = "Passwords do not match";
     }
