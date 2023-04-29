@@ -6,6 +6,9 @@ import {
   arrayUnion,
   doc,
   updateDoc,
+  where,
+  getDocs,
+  query,
 } from "firebase/firestore";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -36,20 +39,43 @@ const AddComment = ({ parentid, onClose, which, superparentid }) => {
           setFormData({ comment: "" });
           setErrors({});
           const commentref = doc(db, which, parentid);
-          console.log(commentref);
           updateDoc(commentref, {
             sons: arrayUnion(docRef.id),
           });
         })
-        // .then(() => {
-        //   // add involvement
-        //   updateDoc(doc(db, "involvement", auth.currentUser.uid), {
-        //     involved: arrayUnion(superparentid),
-        //   });
-        // })
         .then(() => {
-          window.location.reload();
-        });
+          // add involvement
+          const q = query(
+            collection(db, "involvement"),
+            where("uid", "==", auth.currentUser.uid)
+          );
+          const getData = async () => {
+            const querySnapshot = await getDocs(q);
+            console.log(querySnapshot);
+            const data = querySnapshot.docs;
+            console.log(data);
+            if (data.length === 0) {
+              console.log("empty");
+              addDoc(collection(db, "involvement"), {
+                uid: auth.currentUser.uid,
+                involved: [superparentid],
+              });
+            } else {
+              querySnapshot.forEach((doc) => {
+                const involvementref = doc(db, "involvement", doc.id);
+                updateDoc(involvementref, {
+                  involved: arrayUnion(superparentid),
+                });
+              });
+            }
+          };
+          getData().then(() => {
+            window.location.reload();
+          });
+        })
+        // .then(() => {
+        //   window.location.reload();
+        // });
     }
     setErrors(formErrors);
   };

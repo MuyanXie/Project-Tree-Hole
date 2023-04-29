@@ -30,7 +30,7 @@ const FeedPosts = () => {
 
   return (
     <div>
-      <Header name="My Posts" />
+      <Header name="Feed Posts" />
       <div
         style={{
           alignItems: "center",
