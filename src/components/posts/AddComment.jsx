@@ -51,11 +51,8 @@ const AddComment = ({ parentid, onClose, which, superparentid }) => {
           );
           const getData = async () => {
             const querySnapshot = await getDocs(q);
-            console.log(querySnapshot);
             const data = querySnapshot.docs;
-            console.log(data);
             if (data.length === 0) {
-              console.log("empty");
               addDoc(collection(db, "involvement"), {
                 uid: auth.currentUser.uid,
                 involved: [superparentid],

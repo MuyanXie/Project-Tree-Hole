@@ -144,8 +144,6 @@ const PostDetail = () => {
     const q = query(collection(db, "messages"), where("people", "==", [p1, p2]));
 
     getDocs(q).then((querySnapshot) => {
-      console.log(querySnapshot);
-      console.log(querySnapshot.docs.length);
     if (querySnapshot.docs.length > 0) {
       querySnapshot.forEach((doc) => {
         navigate("/dialog", {
