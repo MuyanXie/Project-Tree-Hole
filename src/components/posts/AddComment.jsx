@@ -12,7 +12,7 @@ import Form from "react-bootstrap/Form";
 import CloseButton from "react-bootstrap/CloseButton";
 import classes from "./AddComment.module.css";
 
-const AddComment = ({ parentid, onClose, which }) => {
+const AddComment = ({ parentid, onClose, which, superparentid }) => {
   const [formData, setFormData] = useState({
     comment: "",
   });
@@ -36,10 +36,17 @@ const AddComment = ({ parentid, onClose, which }) => {
           setFormData({ comment: "" });
           setErrors({});
           const commentref = doc(db, which, parentid);
+          console.log(commentref);
           updateDoc(commentref, {
             sons: arrayUnion(docRef.id),
           });
         })
+        // .then(() => {
+        //   // add involvement
+        //   updateDoc(doc(db, "involvement", auth.currentUser.uid), {
+        //     involved: arrayUnion(superparentid),
+        //   });
+        // })
         .then(() => {
           window.location.reload();
         });

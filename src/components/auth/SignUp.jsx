@@ -18,7 +18,6 @@ const SignUp = () => {
     displayName: "",
   });
   const [errors, setErrors] = useState({});
-
   const navigate = useNavigate();
 
   const handleChange = (event) => {

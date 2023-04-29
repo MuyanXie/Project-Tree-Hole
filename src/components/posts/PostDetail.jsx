@@ -1,13 +1,19 @@
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Badge from "react-bootstrap/Badge";
 import { useEffect, useState } from "react";
 import classes from "./PostDetail.module.css";
 import { auth, db } from "../../firebase";
-import { doc, updateDoc, getDoc, collection } from "firebase/firestore";
+import { query, where, getDocs } from "firebase/firestore";
+import { doc, updateDoc, getDoc, collection, addDoc } from "firebase/firestore";
 import Modal from "./Modal";
 import AddComment from "./AddComment";
 import Header from "../display/Header";
-import { IconHeart, IconMessageCircle } from "@tabler/icons-react";
+import {
+  IconHeart,
+  IconMessageCircle,
+  IconMessages,
+} from "@tabler/icons-react";
 
 const RenderTree = ({ id, respondee, setParent, setShow, setWhich }) => {
   const [commentLike, setCommentLike] = useState(false);
@@ -57,7 +63,7 @@ const RenderTree = ({ id, respondee, setParent, setShow, setWhich }) => {
     <div>
       <br></br>
       {comment && (
-        <div style={{fontFamily:"sans-serif"}}>
+        <div style={{ fontFamily: "sans-serif" }}>
           <div
             style={{
               display: "flex",
@@ -102,7 +108,9 @@ const PostDetail = () => {
   const [show, setShow] = useState(false);
   const [parent, setParent] = useState("");
   const [post, setPost] = useState({});
-  const [which, setWhich] = useState("post");
+  const [which, setWhich] = useState("posts");
+
+  const navigate = useNavigate();
 
   const hideModal = () => {
     setShow(false);
@@ -125,6 +133,65 @@ const PostDetail = () => {
     };
     getData();
   }, [state]);
+
+  const startChatHandler = () => {
+    // create the chat object in the database first and get the snapshot reference
+    // direct the user to the chat page with the chat id
+
+    const p1 = auth.currentUser.uid.localeCompare(post.uid) < 0 ? auth.currentUser.uid : post.uid;
+    const p2 = auth.currentUser.uid.localeCompare(post.uid) < 0 ? post.uid : auth.currentUser.uid;
+
+    const q = query(collection(db, "messages"), where("people", "==", [p1, p2]));
+
+    getDocs(q).then((querySnapshot) => {
+      console.log(querySnapshot);
+      console.log(querySnapshot.docs.length);
+    if (querySnapshot.docs.length > 0) {
+      querySnapshot.forEach((doc) => {
+        navigate("/dialog", {
+          state: {
+            id: doc.id,
+            sender: auth.currentUser.uid,
+            recipientName: post.name,
+            senderName: auth.currentUser.displayName,
+          },
+        });
+      });
+    } else {
+      addDoc(collection(db, "messages"), {
+        last: new Date(),
+        recipient: post.uid,
+        recipientName: post.name,
+        recipientUnread: true,
+        sender: auth.currentUser.uid,
+        senderName: auth.currentUser.displayName,
+        senderUnread: false,
+        people: [p1, p2],
+      }).then((docRef) => {
+        addDoc(collection(db, "messages/" + docRef.id + "/chat"), {
+          text: "Hi, just came across your post. Can we chat? [automatic greeting]",
+          date: new Date(),
+          sender: auth.currentUser.uid,
+        })
+          .then(() => {
+            addDoc(collection(db, "contacts"), {
+              people: [auth.currentUser.uid, post.uid],
+            });
+          })
+          .then(() => {
+            navigate("/dialog", {
+              state: {
+                id: docRef.id,
+                sender: auth.currentUser.uid,
+                recipientName: post.name,
+                senderName: auth.currentUser.displayName,
+              },
+            });
+          });
+      });
+    }
+  });
+  };
 
   const likeHandler = () => {
     if (like) {
@@ -149,17 +216,12 @@ const PostDetail = () => {
     <div>
       {show && (
         <Modal>
-          <AddComment
-            parentid={parent}
-            onClose={hideModal}
-            which={which}
-          />
+          <AddComment parentid={parent} onClose={hideModal} which={which} superparentid={post.id} />
         </Modal>
       )}
-      {!show && <Header name = "Post Details"/>}
-
+      {!show && <Header name="Post Details" />}
       {post && (
-        <div className={classes.post} style={{fontFamily:"sans-serif"}}>
+        <div className={classes.post} style={{ fontFamily: "sans-serif" }}>
           <div
             style={{
               display: "flex",
@@ -177,16 +239,29 @@ const PostDetail = () => {
           <br></br>
           <div className={classes.or}></div>
           <br></br>
-          <div style={{ display: "flex", alignItems: "center" }}>
-              <IconHeart
-                fill={like ? "red" : "none"}
-                role="button"
-                onClick={likeHandler}
-                style={{ marginRight: "20px" }}
-              />
-              <IconMessageCircle role="button" onClick={commentHandler} />
-            </div>
-          <br></br>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "10px",
+            }}
+          >
+            <IconHeart
+              fill={like ? "red" : "none"}
+              role="button"
+              onClick={likeHandler}
+              style={{ marginRight: "20px" }}
+            />
+            <IconMessageCircle
+              style={{
+                marginRight: "20px",
+              }}
+              role="button"
+              onClick={commentHandler}
+            />
+            <IconMessages role="button" onClick={startChatHandler} />
+          </div>
+
           <div className={classes.or}></div>
           {post.sons &&
             post.sons.map((son) => (
