@@ -43,7 +43,7 @@ const AddComment = ({ parentid, onClose, which, superparentid }) => {
             sons: arrayUnion(docRef.id),
           });
         })
-        .then(() => {
+        .then(async() => {
           // add involvement
           const q = query(
             collection(db, "involvement"),
@@ -51,28 +51,34 @@ const AddComment = ({ parentid, onClose, which, superparentid }) => {
           );
           const getData = async () => {
             const querySnapshot = await getDocs(q);
+            console.log("break")
             const data = querySnapshot.docs;
             if (data.length === 0) {
+              console.log("add involvement1232134");
               addDoc(collection(db, "involvement"), {
                 uid: auth.currentUser.uid,
                 involved: [superparentid],
               });
             } else {
-              querySnapshot.forEach((doc) => {
-                const involvementref = doc(db, "involvement", doc.id);
+              console.log(q)
+              console.log("add involvement12break2342134");
+              console.log(data)
+              console.log(querySnapshot.docs)
+              querySnapshot.forEach((Snap) => {
+                console.log(Snap.id);
+                const involvementref = doc(db, "involvement", Snap.id);
+                console.log("add break234");
                 updateDoc(involvementref, {
                   involved: arrayUnion(superparentid),
                 });
               });
             }
+            console.log("add involvement finish");
           };
-          getData().then(() => {
-            window.location.reload();
-          });
-        })
-        // .then(() => {
-        //   window.location.reload();
-        // });
+          await getData();
+        }).then(() => {
+          window.location.reload();
+        });
     }
     setErrors(formErrors);
   };
