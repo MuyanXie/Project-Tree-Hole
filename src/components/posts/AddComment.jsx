@@ -51,29 +51,20 @@ const AddComment = ({ parentid, onClose, which, superparentid }) => {
           );
           const getData = async () => {
             const querySnapshot = await getDocs(q);
-            console.log("break")
             const data = querySnapshot.docs;
             if (data.length === 0) {
-              console.log("add involvement1232134");
               addDoc(collection(db, "involvement"), {
                 uid: auth.currentUser.uid,
                 involved: [superparentid],
               });
             } else {
-              console.log(q)
-              console.log("add involvement12break2342134");
-              console.log(data)
-              console.log(querySnapshot.docs)
               querySnapshot.forEach((Snap) => {
-                console.log(Snap.id);
                 const involvementref = doc(db, "involvement", Snap.id);
-                console.log("add break234");
                 updateDoc(involvementref, {
                   involved: arrayUnion(superparentid),
                 });
               });
             }
-            console.log("add involvement finish");
           };
           await getData();
         }).then(() => {
