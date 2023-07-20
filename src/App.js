@@ -22,6 +22,7 @@ import ChatList from "./components/message/ChatList";
 import AddNewPost from "./components/display/AddNewPost";
 import FeedPosts from "./components/display/FeedPosts";
 import Involvement from "./components/display/Involvement";
+import SocialTest from "./components/social/SocialTest";
 import { auth } from "./firebase";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -73,6 +74,8 @@ function App() {
         />
 
         <Route path="/signout" element={<SignOut />} />
+
+        <Route path="/social" element={<SocialTest />} />
 
         <Route
           path="/signup"
