@@ -23,7 +23,7 @@ const SocialTest = () => {
             }
             )
         }
-        testsend();
+        testsend(); 
     }
     , []);
 
