@@ -2,14 +2,20 @@ import { useEffect } from "react";
 import Header from "../display/Header";
 import axios from "axios";
 import { auth } from "../../firebase";
+import { dev_host as host } from "./social_config";
 
 const SocialTest = () => {
     useEffect(() => {
         console.log("SocialTest");
         const testsend = async () => {
-            await axios.post("http://127.0.0.1:5000/api/socialtest/", {
+            const token2 = await auth.currentUser.getIdToken(true)
+            await axios.post(`${host}/api/socialtest/`, {
                 tester : "123",
-                auth : auth.currentUser.getIdToken(true)
+                auth : token2,
+            }, {
+                headers: {
+                    Authorization: token2
+                }
             }
             )
             .then((res) => {
