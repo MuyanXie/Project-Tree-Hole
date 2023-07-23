@@ -46,7 +46,7 @@ const Header = ({ name }) => {
               <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/about">About</Nav.Link>
-            <Nav.Link href="/social">Social</Nav.Link>
+            <Nav.Link href="/sso">Social</Nav.Link>
             <Nav.Link href="/signout">Logout/Login</Nav.Link>
           </Nav>
           <Form style={{ display: "flex", alignItems: "center" }}>

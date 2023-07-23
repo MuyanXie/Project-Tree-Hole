@@ -23,6 +23,7 @@ import AddNewPost from "./components/display/AddNewPost";
 import FeedPosts from "./components/display/FeedPosts";
 import Involvement from "./components/display/Involvement";
 import SocialTest from "./components/social/SocialTest";
+import SSO from "./components/social/SSO";
 import { auth } from "./firebase";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -241,7 +242,11 @@ function App() {
             )
           }
         />
+
+        <Route path="/sso" element={<SSO />} />
+
       </Routes>
+
     </Router>
   );
 }
