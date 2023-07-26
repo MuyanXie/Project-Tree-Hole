@@ -23,7 +23,7 @@ import AddNewPost from "./components/display/AddNewPost";
 import FeedPosts from "./components/display/FeedPosts";
 import Involvement from "./components/display/Involvement";
 
-import SSO from "./components/social/SSO";
+import SSO from "./components/social/auth/SSO";
 import SocialDashboard from "./components/social/Dashboard/SocialDashboard";
 import { auth } from "./firebase";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -76,8 +76,6 @@ function App() {
         />
 
         <Route path="/signout" element={<SignOut />} />
-
-        <Route path="/social" element={<SocialTest />} />
 
         <Route
           path="/signup"
@@ -273,6 +271,7 @@ function App() {
             )
           }
         />
+
 
       </Routes>
 

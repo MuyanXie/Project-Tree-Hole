@@ -13,6 +13,11 @@ apiClient.interceptors.request.use(
     if (userDetails) {
       const token = JSON.parse(userDetails).token;
       config.headers.Authorization = `${token}`;
+      config.headers.User= JSON.stringify( {
+        userId : JSON.parse(userDetails).userId,
+        mail : JSON.parse(userDetails).mail,
+      })
+      // console.log(config.headers.User)
     }
 
     return config;

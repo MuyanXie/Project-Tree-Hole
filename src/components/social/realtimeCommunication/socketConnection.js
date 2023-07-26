@@ -17,6 +17,10 @@ export const connectWithSocketServer = (userDetails) => {
   socket = io("http://localhost:5002", {
     auth: {
       token: jwtToken,
+      user: JSON.stringify({
+        userId: userDetails.userId,
+        mail: userDetails.mail,
+      })
     },
   });
 

@@ -26,7 +26,8 @@ const SSO = () => {
         // add logic
         const send_jwt = async () => {
             const token = await auth.currentUser.getIdToken(true)
-            await axios.post(`${host}/api/social/sso`, {
+            // console.log(token);
+            await axios.post(`${host}/api/auth/login`, {
                 mail : auth.currentUser.email,
                 token : token,
                 username : auth.currentUser.displayName,
@@ -38,7 +39,15 @@ const SSO = () => {
             }
             )
             .then((res) => {
+                console.log(res);
                 if(res.status === 200){
+                    const userDetails = {
+                        mail : res.data.userDetails.mail,
+                        token : res.data.userDetails.token,
+                        username : res.data.userDetails.username,
+                        userId : res.data.userDetails._id,
+                    }
+                    localStorage.setItem("user", JSON.stringify(userDetails));
                     navigate("/socialdashboard");
                 }
                 else{
