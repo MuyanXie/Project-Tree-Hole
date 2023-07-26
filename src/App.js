@@ -22,8 +22,9 @@ import ChatList from "./components/message/ChatList";
 import AddNewPost from "./components/display/AddNewPost";
 import FeedPosts from "./components/display/FeedPosts";
 import Involvement from "./components/display/Involvement";
-import SocialTest from "./components/social/SocialTest";
+
 import SSO from "./components/social/SSO";
+import SocialDashboard from "./components/social/Dashboard/SocialDashboard";
 import { auth } from "./firebase";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -243,7 +244,35 @@ function App() {
           }
         />
 
-        <Route path="/sso" element={<SSO />} />
+        <Route
+          path="/sso"
+          element={
+            user ? (
+              user.emailVerified ? (
+                <SSO />
+              ) : (
+                <Navigate to="/verifyemail" />
+              )
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
+
+        <Route
+          path="/socialdashboard"
+          element={
+            user ? (
+              user.emailVerified ? (
+                <SocialDashboard />
+              ) : (
+                <Navigate to="/verifyemail" />
+              )
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
 
       </Routes>
 

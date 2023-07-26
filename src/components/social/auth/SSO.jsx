@@ -1,9 +1,13 @@
 // Remind: Do you want to use SSO to sign in to Spring (Tree Hole Friends Network) ?
 
 import { Typography, styled } from "@mui/material";
-import Header from "../display/Header";
+import { auth } from "../../../firebase";
+import axios from "axios";
+import { dev_host as host } from "../social_config";
+import Header from "../../display/Header";
 import Box from "@mui/material/Box";
-import CustomPrimaryButton from "../utils/CustomPrimaryButton";
+import { useNavigate } from "react-router-dom";
+import CustomPrimaryButton from "../../utils/CustomPrimaryButton";
 import Groups2OutlinedIcon from '@mui/icons-material/Groups2Outlined';
 const BoxWrapper = styled("div")({
     width: "100%",
@@ -16,7 +20,35 @@ const BoxWrapper = styled("div")({
 
 const SSO = () => {
 
+    const navigate = useNavigate();
+
     const onClick = () => {
+        // add logic
+        const send_jwt = async () => {
+            const token = await auth.currentUser.getIdToken(true)
+            await axios.post(`${host}/api/social/sso`, {
+                mail : auth.currentUser.email,
+                token : token,
+                username : auth.currentUser.displayName,
+                fireid : auth.currentUser.uid,
+            }, {
+                headers: {
+                    Authorization: token
+                }
+            }
+            )
+            .then((res) => {
+                if(res.status === 200){
+                    navigate("/socialdashboard");
+                }
+                else{
+                    console.log(res);
+                }
+
+            }
+            )
+        }
+        send_jwt();
     }
 
     return (
