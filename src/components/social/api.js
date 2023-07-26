@@ -6,14 +6,13 @@ const apiClient = axios.create({
   timeout: 1000,
 });
 
-// deprecated
 apiClient.interceptors.request.use(
   (config) => {
     const userDetails = localStorage.getItem("user");
 
     if (userDetails) {
       const token = JSON.parse(userDetails).token;
-      config.headers.Authorization = `Bearer ${token}`; /// consider this Bearer note here! I think it should be removed
+      config.headers.Authorization = `${token}`;
     }
 
     return config;
