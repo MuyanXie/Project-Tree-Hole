@@ -1,8 +1,8 @@
 import axios from "axios";
 import { logout } from "./shared/utils/auth";
-
+import { dev_host as host } from "./social_config";
 const apiClient = axios.create({
-  baseURL: "http://localhost:5002/api",
+  baseURL: `${host}/api`,
   timeout: 1000,
 });
 
