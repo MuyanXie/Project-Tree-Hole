@@ -38,7 +38,7 @@ const Header = ({ name }) => {
           >
             <Nav.Link href="/feedposts">Feed</Nav.Link>
             <Nav.Link href="/addnewpost">New...</Nav.Link>
-            <Nav.Link href="/chatlist">Messages</Nav.Link>
+            <Nav.Link href="/chatlist">Banter</Nav.Link>
             <NavDropdown title="Me" id="navbarScrollingDropdown">
               <NavDropdown.Item href="/myposts">My Posts</NavDropdown.Item>
               <NavDropdown.Item href="/myinvolvement">Commented On...</NavDropdown.Item>
@@ -46,6 +46,7 @@ const Header = ({ name }) => {
               <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/about">About</Nav.Link>
+            <Nav.Link href="/sso">Social</Nav.Link>
             <Nav.Link href="/signout">Logout/Login</Nav.Link>
           </Nav>
           <Form style={{ display: "flex", alignItems: "center" }}>

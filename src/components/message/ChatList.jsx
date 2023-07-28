@@ -62,7 +62,7 @@ const ChatList = () => {
 
   return (
     <div>
-      <Header name={"Chatlist"} />
+      <Header name={"Banter"} />
       <h1
         style={{
           textAlign: "center",
