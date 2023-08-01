@@ -6,6 +6,10 @@ This is the repository for the UChicago Tree Hole Project. The project is an imp
 The backend is a mixture of Firebase and Azure-hosted virtual machines. Redirect to the following link to find the repo for the backend codes:
  https://github.com/MuyanXie/Project-Tree-Hole-Backend
 
+## Architecture
+
+![Alt Text](instructions/Tree_Hole_Flowchart.png)
+
 ## Technical Highlights:
 - React, with Redux and React Hooks heavily utilized
 - Material UI for the Spring System
