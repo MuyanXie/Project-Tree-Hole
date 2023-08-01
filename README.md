@@ -1,6 +1,6 @@
 # UChicago Tree Hole Project
 
-This is the repository for the UChicago Tree Hole Project. The project is an implementation of website for the UChicago students to anonymously post their thoughts and feelings. The website is built using __Firebase__ and __React__. Refer to the __backend__ section for more details.
+This is the repository for the UChicago Tree Hole Project. The project is an implementation of website for the UChicago students to anonymously post their thoughts and feelings. The website is built using __Firebase__ and __React__. Refer to the __backend__ section with __Golang__ and __Node.js__ for more details.
 
 ## Backend:
 The backend is a mixture of Firebase and Azure-hosted virtual machines. Redirect to the following link to find the repo for the backend codes:
